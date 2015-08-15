@@ -28,6 +28,7 @@ public class Screen {
 	{
 		while(!Display.isCloseRequested())
 		{
+			glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 		    GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
 		    draw(gs);
 	        Display.update();
@@ -38,16 +39,19 @@ public class Screen {
 	}
 	
 	private void init() {
-	  initDisplay();
-	  initOGL();
+		initDisplay();
+		initOGL();
 	}
 	 
 	private void initDisplay() {
-	    try {
-	        Display.setDisplayMode(new DisplayMode(WIDTH, HEIGHT));
+	    try
+	    {
+	    	Display.setDisplayMode(new DisplayMode(WIDTH, HEIGHT));
 	        Display.setTitle("Automata War!");
 	        Display.create();
-	    } catch(LWJGLException e){
+	    }
+	    catch(LWJGLException e)
+	    {
 	        e.printStackTrace();
 	    }
 	     
@@ -94,13 +98,13 @@ public class Screen {
 	public void draw_rect(int y1, int y2, int x1, int x2, int cor)
 	{
 		if(cor == 1)
-			GL11.glColor3f(0.5f, 1.0f, 1.0f);
+			GL11.glColor3f(0.0f, 0.0f, 1.0f);
 		else if(cor == 2)
-			GL11.glColor3f(1.0f, 0.5f, 1.0f);
+			GL11.glColor3f(1.0f, 0f, 0.0f);
 		else if(cor == 3)
-			GL11.glColor3f(1.0f, 1.0f, 0.5f);
+			GL11.glColor3f(0.6f, 0.2f, 0.5f);
 		else
-			GL11.glColor3f(0.7f, 0.7f, 0.7f);
+			GL11.glColor3f(1.0f, 1.0f, 1.0f);
            
         // draw quad
 		GL11.glBegin(GL11.GL_QUADS);
@@ -109,7 +113,6 @@ public class Screen {
 	    GL11.glVertex2f(x2, y2);
 	    GL11.glVertex2f(x1, y2);
 	    GL11.glEnd();
-         
 	}
 	
 
