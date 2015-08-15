@@ -10,8 +10,8 @@ public class Controllers {
 	public static final int left1 = Keyboard.KEY_A;
 	public static final int right1 = Keyboard.KEY_D;
 	
-	public static final int act1 = Keyboard.KEY_1;
-	public static final int select1 = Keyboard.KEY_2;
+	public static final int act1 = Keyboard.KEY_Q;
+	public static final int select1 = Keyboard.KEY_E;
 	
 	public static final int up2 = Keyboard.KEY_UP;
 	public static final int down2 = Keyboard.KEY_DOWN;
@@ -35,40 +35,54 @@ public class Controllers {
 			switch(key_state)
 			{
 				case up1:
-					p1.set_sel(p1.getX(), p1.getY()-1);
+					if(Keyboard.isKeyDown(up1))
+						p1.set_sel(p1.getX(), p1.getY()-1);
 					break;
 				case down1:
-					p1.set_sel(p1.getX(), p1.getY()+1);
+					if(Keyboard.isKeyDown(down1))
+						p1.set_sel(p1.getX(), p1.getY()+1);
 					break;
 				case left1:
-					p1.set_sel(p1.getX()-1, p1.getY());
+					if(Keyboard.isKeyDown(left1))
+						p1.set_sel(p1.getX()-1, p1.getY());
 					break;
 				case right1:
-					p1.set_sel(p1.getX()+1, p1.getY());
+					if(Keyboard.isKeyDown(right1))
+						p1.set_sel(p1.getX()+1, p1.getY());
 					break;
 				case act1:
-					p1.act();
+					if(Keyboard.isKeyDown(act1))
+						p1.act();
 					break;
 				case select1:
-					p1.sel();
+					if(Keyboard.isKeyDown(select1))
+						p1.sel();
+					break;
 					
 				case up2:
-					p2.set_sel(p2.getX(), p2.getY()-1);
+					if(Keyboard.isKeyDown(up2))
+						p2.set_sel(p2.getX(), p2.getY()-1);
 					break;
 				case down2:
-					p2.set_sel(p2.getX(), p2.getY()+1);
+					if(Keyboard.isKeyDown(down2))
+						p2.set_sel(p2.getX(), p2.getY()+1);
 					break;
 				case left2:
-					p2.set_sel(p2.getX()-1, p2.getY());
+					if(Keyboard.isKeyDown(left2))
+						p2.set_sel(p2.getX()-1, p2.getY());
 					break;
 				case right2:
-					p2.set_sel(p2.getX()+1, p2.getY());
+					if(Keyboard.isKeyDown(right2))
+						p2.set_sel(p2.getX()+1, p2.getY());
 					break;
 				case act2:
-					p2.act();
+					if(Keyboard.isKeyDown(act2))
+						p2.act();
 					break;
 				case select2:
-					p2.sel();
+					if(Keyboard.isKeyDown(select2))
+						p2.sel();
+					break;
 			}
 		}
 	}

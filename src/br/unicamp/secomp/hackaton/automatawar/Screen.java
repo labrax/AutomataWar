@@ -3,16 +3,11 @@ package br.unicamp.secomp.hackaton.automatawar;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.Sys;
 import org.lwjgl.opengl.*;
- 
-import java.nio.ByteBuffer;
 
 import static org.lwjgl.opengl.GL11.*;
 
 public class Screen {
-    // The window handle
-    private long window;
-    
-	private int WIDTH = 1000, HEIGHT = 800;
+	private int WIDTH, HEIGHT;
 	
 	private GameState gs;
 	private Controllers c;
@@ -37,7 +32,7 @@ public class Screen {
 	{
 		while(!Display.isCloseRequested())
 		{
-			glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+			glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 			c.handle();
 		    GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
 		    draw();
@@ -81,7 +76,10 @@ public class Screen {
 	{
 		//System.out.println("Drawing");
 		
-        int BORDER_TOP = 0;
+        int BORDER_TOP = 50;
+        int BORDER_LEFT = 0;
+        
+		draw_rect(0+BORDER_TOP, HEIGHT-BORDER_TOP, 0+BORDER_LEFT, WIDTH-BORDER_LEFT, 4);
         
 		int gs_w = gs.getWidth();
 		int gs_h = gs.getHeight();
@@ -96,10 +94,10 @@ public class Screen {
 					System.out.println();*/
 				if(gs.getState(i, j) != 10)
 				{
-					int cima = i*10 + 1 + BORDER_TOP;
-					int baixo = cima+7;
-					int esquerda = j*10 + 1;
-					int direita = esquerda+7;
+					int cima = HEIGHT - (i*5 + 1 + BORDER_TOP);
+					int baixo = cima - 3;
+					int esquerda = WIDTH - (j*5 + 1 + BORDER_LEFT);
+					int direita = esquerda - 3;
 					draw_rect(cima, baixo, esquerda, direita, gs.getState(i, j));
 				}
 			}
@@ -114,6 +112,8 @@ public class Screen {
 			GL11.glColor3f(1.0f, 0f, 0.0f);
 		else if(cor == 3)
 			GL11.glColor3f(0.6f, 0.2f, 0.5f);
+		else if(cor == 4)
+			GL11.glColor3f(0.0f, 0.0f, 0.0f);
 		else
 			GL11.glColor3f(1.0f, 1.0f, 1.0f);
            

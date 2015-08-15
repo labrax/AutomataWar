@@ -14,10 +14,12 @@ public class Player {
 	
 	public void set_sel(int x, int y)
 	{
-		sel_x = x;
-		sel_y = y;
+		if(x >= 0 && x < Game.STATES_WIDTH)
+			sel_x = x;
+		if(y >= 0 && y < Game.STATES_HEIGHT)
+			sel_y = y;
 		
-		System.out.println("Player " + player_number + " at: " + x + "," + y);
+		System.out.println("Player " + player_number + " at: " + sel_x + "," + sel_y);
 	}
 	
 	public int getX()
@@ -32,11 +34,13 @@ public class Player {
 	
 	public void act()
 	{
+		System.out.println("Player + " + player_number + " act.");
 		op = 1;
 	}
 	
 	public void sel()
 	{
+		System.out.println("Player + " + player_number + " sel.");
 		op = 2;
 	}
 	
