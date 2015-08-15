@@ -3,12 +3,14 @@ package br.unicamp.secomp.hackaton.automatawar;
 import java.util.Random;
 
 public class GameState {
-	private char[][] states;
+	private int[][] states;
 	private int y, x;
 	
 	GameState(int y, int x)
 	{
-		states = new char[y][x];
+		this.y = y;
+		this.x = x;
+		states = new int[y][x];
 		
 	    Random rand = new Random(); 
 	    rand.setSeed(System.currentTimeMillis()); 
@@ -17,7 +19,7 @@ public class GameState {
 		    for (int j = 0; j < x; j++)
 		    {
 		        Integer r = rand.nextInt()%4; 
-		        states[i][j] = (char) Math.abs(r);
+		        states[i][j] = Math.abs(r);
 		    }
 		}
 	    
@@ -30,7 +32,7 @@ public class GameState {
 	    	}
 	}
 	
-	public char getState(int y, int x)
+	public int getState(int y, int x)
 	{
 		return states[y][x];
 	}

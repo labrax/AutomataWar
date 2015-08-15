@@ -38,10 +38,9 @@ public class Screen {
         // Configure our window
         glfwDefaultWindowHints(); // optional, the current window hints are already the default
         glfwWindowHint(GLFW_VISIBLE, GL_FALSE); // the window will stay hidden after creation
-        glfwWindowHint(GLFW_RESIZABLE, GL_TRUE); // the window will be resizable
  
         // Create the window
-        window = glfwCreateWindow(WIDTH, HEIGHT, "Automata War", NULL, NULL);
+        window = glfwCreateWindow(WIDTH, HEIGHT, "AutomataWar!", NULL, NULL);
         if ( window == NULL )
             throw new RuntimeException("Failed to create the GLFW window");
  
@@ -88,13 +87,18 @@ public class Screen {
         // the window or has pressed the ESCAPE key.
         while ( glfwWindowShouldClose(window) == GL_FALSE ) {
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // clear the framebuffer
- 
+            
+            
+            draw(gs);
+            
             glfwSwapBuffers(window); // swap the color buffers
+            
+            
  
             // Poll for window events. The key callback above will only be
             // invoked during this call.
             glfwPollEvents();
-            draw(gs);
+            
             
         }
 	}
@@ -112,14 +116,14 @@ public class Screen {
 		{
 			for(int j=0; j < gs_w; j++)
 			{
-				System.out.print(gs.getState(i, j));
+				/*System.out.print(">" + gs.getState(i, j) + "<");
 				if(j == gs_w-1)
-					System.out.println();
+					System.out.println();*/
 				if(gs.getState(i, j) != 10)
 				{
-					int cima = i*10 + BORDER_TOP;
+					int cima = i*10 + 1 + BORDER_TOP;
 					int baixo = cima+7;
-					int esquerda = j*10;
+					int esquerda = j*10 + 1;
 					int direita = esquerda+7;
 					draw_box(cima, baixo, esquerda, direita, gs.getState(i, j));
 				}
@@ -129,6 +133,7 @@ public class Screen {
 	
 	public void draw_box(int y1, int y2, int x1, int x2, int cor)
 	{
+		System.out.println("(" + x1 + "," + y1 + ")-(" + x2 + "," + y2 + ") = " + cor);
 		// set the color of the quad (R,G,B,A)
 		if(cor == 1)
 			GL11.glColor3f(0.5f, 1.0f, 1.0f);
@@ -141,10 +146,10 @@ public class Screen {
 		
 		// draw quad
 		GL11.glBegin(GL11.GL_QUADS);
-		    GL11.glVertex2f(x1, y1);
-		    GL11.glVertex2f(x2, y1);
-		    GL11.glVertex2f(x2, y2);
-		    GL11.glVertex2f(x1, y2);
+		    GL11.glVertex2f(0, 0);
+		    GL11.glVertex2f(0.5f, 0);
+		    GL11.glVertex2f(0.5f, 0.5f);
+		    GL11.glVertex2f(0, 0.5f);
 		GL11.glEnd();
 	}
 	
