@@ -50,7 +50,7 @@ public class GameState {
 	public void compute()
 	{
 		int i, j;
-		int aux[][];
+		int aux[][] = new int[height][width];
 		for(i = 0; i < width; i++)
 			for(j = 0; j < height; j++)
 			{
