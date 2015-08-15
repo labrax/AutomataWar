@@ -72,14 +72,8 @@ public class Screen {
         glfwShowWindow(window);
 	}
 	
-	public void draw(GameState gs)
+	public void loop(GameState gs)
 	{
-		int gs_w = gs.getWidth();
-		int gs_h = gs.getHeight();
-		char states[][] = gs.getStates();
-		
-
-
         // This line is critical for LWJGL's interoperation with GLFW's
         // OpenGL context, or any context that is managed externally.
         // LWJGL detects the context that is current in the current thread,
@@ -100,14 +94,65 @@ public class Screen {
             // Poll for window events. The key callback above will only be
             // invoked during this call.
             glfwPollEvents();
+            draw(gs);
+            
         }
+	}
+	
+	public void draw(GameState gs)
+	{
+		System.out.println("Drawing");
+		
+        int BORDER_TOP = 200;
+        
+		int gs_w = gs.getWidth();
+		int gs_h = gs.getHeight();
+		
+		for(int i=0; i < gs_h; i++)
+		{
+			for(int j=0; j < gs_w; j++)
+			{
+				System.out.print(gs.getState(i, j));
+				if(j == gs_w-1)
+					System.out.println();
+				if(gs.getState(i, j) != 10)
+				{
+					int cima = i*10 + BORDER_TOP;
+					int baixo = cima+7;
+					int esquerda = j*10;
+					int direita = esquerda+7;
+					draw_box(cima, baixo, esquerda, direita, gs.getState(i, j));
+				}
+			}
+		}
+	}
+	
+	public void draw_box(int y1, int y2, int x1, int x2, int cor)
+	{
+		// set the color of the quad (R,G,B,A)
+		if(cor == 1)
+			GL11.glColor3f(0.5f, 1.0f, 1.0f);
+		else if(cor == 2)
+			GL11.glColor3f(1.0f, 0.5f, 1.0f);
+		else if(cor == 3)
+			GL11.glColor3f(1.0f, 1.0f, 0.5f);
+		else
+			GL11.glColor3f(0.7f, 0.7f, 0.7f);
+		
+		// draw quad
+		GL11.glBegin(GL11.GL_QUADS);
+		    GL11.glVertex2f(x1, y1);
+		    GL11.glVertex2f(x2, y1);
+		    GL11.glVertex2f(x2, y2);
+		    GL11.glVertex2f(x1, y2);
+		GL11.glEnd();
 	}
 	
 	public void run(GameState gs)
 	{
 		try
 		{
-			draw(gs);
+			loop(gs);
 			
             // Release window and window callbacks
             glfwDestroyWindow(window);

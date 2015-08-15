@@ -10,7 +10,7 @@ public class Game {
 	public static void main(String args[])
 	{
 		Screen screen = new Screen(800, 1200);
-		GameState gs = new GameState(1000, 600);
+		GameState gs = new GameState(100, 60);
 		
 		screen.run(gs);
 

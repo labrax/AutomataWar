@@ -1,5 +1,6 @@
 # Java Object Files
-*.class
+*.class*
+.class*
 
 # Windows image file caches
 Thumbs.db
