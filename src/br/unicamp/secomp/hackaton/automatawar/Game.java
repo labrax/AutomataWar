@@ -1,7 +1,5 @@
 package br.unicamp.secomp.hackaton.automatawar;
 
-import static org.lwjgl.glfw.GLFW.glfwDestroyWindow;
-import static org.lwjgl.glfw.GLFW.glfwTerminate;
 
 public class Game {
 	private static int count_frames = 0;
@@ -9,8 +7,8 @@ public class Game {
 	
 	public static void main(String args[])
 	{
-		Screen screen = new Screen(800, 1200);
-		GameState gs = new GameState(100, 60);
+		Screen screen = new Screen(640, 800);
+		GameState gs = new GameState(54, 80);
 		
 		screen.run(gs);
 

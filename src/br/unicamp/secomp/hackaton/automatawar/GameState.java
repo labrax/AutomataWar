@@ -18,7 +18,7 @@ public class GameState {
 	    {     
 		    for (int j = 0; j < x; j++)
 		    {
-		        Integer r = rand.nextInt()%4; 
+		        Integer r = rand.nextInt()%3; 
 		        states[i][j] = Math.abs(r);
 		    }
 		}
