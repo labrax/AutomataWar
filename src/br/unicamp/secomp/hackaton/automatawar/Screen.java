@@ -41,7 +41,7 @@ public class Screen {
         glfwWindowHint(GLFW_RESIZABLE, GL_TRUE); // the window will be resizable
  
         // Create the window
-        window = glfwCreateWindow(WIDTH, HEIGHT, "Hello World!", NULL, NULL);
+        window = glfwCreateWindow(WIDTH, HEIGHT, "Automata War", NULL, NULL);
         if ( window == NULL )
             throw new RuntimeException("Failed to create the GLFW window");
  
