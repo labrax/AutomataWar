@@ -93,7 +93,7 @@ public class Screen {
 		int gs_w = gs.getWidth();
 		int gs_h = gs.getHeight();
 		
-		// está desenhando de baixo pra cima
+		// está desenhando de cima pra baixo
 		for(int i=0; i < gs_h; i++)
 		{
 			for(int j=0; j < gs_w; j++)
