@@ -54,7 +54,7 @@ public class GameState {
 		
 		for(j = 0; j < height; j++)
 			for(i = 0; i < width; i++)
-				aux[j][i] = rule(i, j);
+				aux[j][i] = rule(states[j][i], i, j);
 
 		for(j = 0; j < height; j++)
 			for(i = 0; i < width; i++)
@@ -83,22 +83,22 @@ public class GameState {
 		return 0;
 	}
 	
-	public int rule(int x, int y)
+	public int rule(int player, int x, int y)
 	{
 		int currstate = getElement(x, y);
 		int amount = getAmount(currstate, x, y);
 		
-		if (currstate == 1)
+		if (currstate != 0)
 		{
 			if (amount == 2 || amount == 3) /* 2 and 3 survive */
-				return 1;
+				return player;
 			else /* less than 2 or more than 3 die */
 				return 0;
 		}
 		else if (currstate == 0)
 		{
 			if (amount == 3)
-				return 1;
+				return player;
 			else
 				return 0;
 		}
