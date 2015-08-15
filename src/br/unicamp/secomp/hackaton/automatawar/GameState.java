@@ -4,13 +4,13 @@ import java.util.Random;
 
 public class GameState {
 	private int[][] states;
-	private int y, x;
+	private int height, width;
 	
 	GameState(int y, int x)
 	{
-		this.y = y;
-		this.x = x;
-		states = new int[y][x];
+		this.height = y;
+		this.width = x;
+		states = new int[height][width];
 		
 	    Random rand = new Random(); 
 	    rand.setSeed(System.currentTimeMillis()); 
@@ -39,12 +39,12 @@ public class GameState {
 	
 	public int getHeight()
 	{
-		return y;
+		return height;
 	}
 	
 	public int getWidth()
 	{
-		return x;
+		return width;
 	}
 	
 	public void compute()
@@ -65,17 +65,17 @@ public class GameState {
 		return count - 1;
 	}
 	
-	public int getElement(in[][] table, int x, int y) {
-		if(x >= 0 && x < size_x)
-			if(y >= 0 && y < size_y)
-				return table[y][x];
+	public int getElement(int x, int y) {
+		if(x >= 0 && x < width)
+			if(y >= 0 && y < height)
+				return states[y][x];
 		return 0;
 	}
 	
-	public int rule(int[][] table, int x, int y)
+	public int rule(int x, int y)
 	{
-		amount = getAmount(table, 1, x, y, 1);
-		currstate = getElement(table, x, y);
+		int amount = getAmount(1, x, y);
+		int currstate = getElement(x, y);
 		if (currstate == 1)
 		{
 			if (amount == 2 || amount == 3) /* 2 and 3 survive */
