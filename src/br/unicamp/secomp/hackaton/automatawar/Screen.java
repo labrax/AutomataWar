@@ -16,6 +16,9 @@ public class Screen {
     private GLFWErrorCallback errorCallback;
     private GLFWKeyCallback   keyCallback;
     
+    // The window handle
+    private long window;
+    
 	private int WIDTH = 1000, HEIGHT = 800;
 	
 	public Screen(int y, int x)
@@ -76,27 +79,7 @@ public class Screen {
 		char states[][] = gs.getStates();
 		
 
-		
-	}
- 
-    // The window handle
-    private long window;
- 
-    public void run() {
-        try {
-            loop();
- 
-            // Release window and window callbacks
-            glfwDestroyWindow(window);
-            keyCallback.release();
-        } finally {
-            // Terminate GLFW and release the GLFWerrorfun
-            glfwTerminate();
-            errorCallback.release();
-        }
-    }
- 
-    private void loop() {
+
         // This line is critical for LWJGL's interoperation with GLFW's
         // OpenGL context, or any context that is managed externally.
         // LWJGL detects the context that is current in the current thread,
@@ -118,6 +101,22 @@ public class Screen {
             // invoked during this call.
             glfwPollEvents();
         }
-    }
+	}
+	
+	public void run(GameState gs)
+	{
+		try
+		{
+			draw(gs);
+			
+            // Release window and window callbacks
+            glfwDestroyWindow(window);
+            keyCallback.release();
+        } finally {
+            // Terminate GLFW and release the GLFWerrorfun
+            glfwTerminate();
+            errorCallback.release();
+        }
+	}
 
 }

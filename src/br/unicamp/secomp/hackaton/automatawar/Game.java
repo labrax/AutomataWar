@@ -1,5 +1,8 @@
 package br.unicamp.secomp.hackaton.automatawar;
 
+import static org.lwjgl.glfw.GLFW.glfwDestroyWindow;
+import static org.lwjgl.glfw.GLFW.glfwTerminate;
+
 public class Game {
 	private static int count_frames = 0;
 	private static long lastTime = 0;
@@ -9,8 +12,8 @@ public class Game {
 		Screen screen = new Screen(800, 1200);
 		GameState gs = new GameState(1000, 600);
 		
-		screen.run();
-		
+		screen.run(gs);
+
 		/*while(true)
 		{
 			long currTime = System.currentTimeMillis();
