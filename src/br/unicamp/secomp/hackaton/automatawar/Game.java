@@ -5,6 +5,8 @@ public class Game {
 	public static int STATES_WIDTH = 280;
 	public static int STATES_HEIGHT = 140;
 	
+	public static int UPDATES_PER_SECOND = 1;
+	
 	public static void main(String args[])
 	{
 		Player p1 = new Player(1), p2 = new Player(2);

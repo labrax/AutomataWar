@@ -51,15 +51,14 @@ public class GameState {
 	{
 		int i, j;
 		int aux[][] = new int[height][width];
-		for(i = 0; i < width; i++)
-			for(j = 0; j < height; j++)
-			{
+		
+		for(j = 0; j < height; j++)
+			for(i = 0; i < width; i++)
 				aux[j][i] = rule(i, j);
-			}
 
-		for(i = 0; i < width; i++)
-			for(j = 0; j < height; j++)
-				states[i][j] = aux[i][j];
+		for(j = 0; j < height; j++)
+			for(i = 0; i < width; i++)
+				states[j][i] = aux[j][i];
 					
 		return;
 	}
@@ -86,8 +85,9 @@ public class GameState {
 	
 	public int rule(int x, int y)
 	{
-		int amount = getAmount(1, x, y);
 		int currstate = getElement(x, y);
+		int amount = getAmount(currstate, x, y);
+		
 		if (currstate == 1)
 		{
 			if (amount == 2 || amount == 3) /* 2 and 3 survive */
@@ -102,6 +102,5 @@ public class GameState {
 			else
 				return 0;
 		}
-		return 0;
 	}
 }

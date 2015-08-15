@@ -30,10 +30,19 @@ public class Screen {
 		
 	public void run()
 	{
+		long currTime, lastTime=0;
 		while(!Display.isCloseRequested())
 		{
 			glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 			c.handle();
+			
+			currTime = System.currentTimeMillis();
+			if(currTime >= lastTime + 1000/Game.UPDATES_PER_SECOND)
+			{
+				gs.compute();
+				lastTime = currTime;
+			}
+			
 		    GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
 		    draw();
 	        Display.update();
