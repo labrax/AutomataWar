@@ -17,28 +17,6 @@ public class Game {
 		p1.set_sel(105, 70);
 		p2.set_sel(175, 70);
 		
-		screen.run();
-
-		/*while(true)
-		{
-			long currTime = System.currentTimeMillis();
-			
-			//pega input
-			//trabalha o jogo
-			screen.draw(gs); //desenha na tela
-			 
-			if((currTime/1000 == lastTime/1000) && count_frames < 60)
-			{
-				count_frames++;
-			}
-			else
-			{
-				try {
-					Thread.sleep((currTime/1000)*1000 - lastTime);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-			}
-		}*/
+		screen.run(); //game!
 	}
 }

@@ -7,6 +7,9 @@ import org.lwjgl.opengl.*;
 import static org.lwjgl.opengl.GL11.*;
 
 public class Screen {
+	int p1_color = 0;
+	int p2_color = 0;
+	
 	private int WIDTH, HEIGHT;
 	
 	private GameState gs;
@@ -98,15 +101,27 @@ public class Screen {
 		{
 			for(int j=0; j < gs_w; j++)
 			{
-				/*System.out.print(">" + gs.getState(i, j) + "<");
+				/*
+				//debug, print tile map:
+				System.out.print(">" + gs.getState(i, j) + "<");
 				if(j == gs_w-1)
 					System.out.println();*/
-				if(gs.getState(i, j) != 10)
+				
+				int cima = HEIGHT - (i*5 + 1 + BORDER_TOP);
+				int baixo = cima - 3;
+				int esquerda = j*5 + 1 + BORDER_LEFT;
+				int direita = esquerda - 3;
+				
+				if(p1.getY() == i && p1.getX() == j)
 				{
-					int cima = HEIGHT - (i*5 + 1 + BORDER_TOP);
-					int baixo = cima - 3;
-					int esquerda = WIDTH - (j*5 + 1 + BORDER_LEFT);
-					int direita = esquerda - 3;
+					draw_rect(cima, baixo, esquerda, direita, 21);
+				}
+				else if(p2.getY() == i && p2.getX() == j)
+				{
+					draw_rect(cima, baixo, esquerda, direita, 22);
+				}
+				else if(gs.getState(i, j) != 10)
+				{
 					draw_rect(cima, baixo, esquerda, direita, gs.getState(i, j));
 				}
 			}
@@ -123,6 +138,22 @@ public class Screen {
 			GL11.glColor3f(0.6f, 0.2f, 0.5f);
 		else if(cor == 4)
 			GL11.glColor3f(0.0f, 0.0f, 0.0f);
+		else if(cor == 21)
+		{
+			if(p1_color==0)
+				GL11.glColor3f(0.1f, 0.1f, 1.0f);
+			else
+				GL11.glColor3f(0.1f, 0.1f, 0.9f);
+			p1_color = p1_color+1%5;
+		}
+		else if(cor == 22)
+		{
+			if(p2_color==0)
+				GL11.glColor3f(1.0f, 0.1f, 1.0f);
+			else
+				GL11.glColor3f(0.9f, 0.1f, 0.1f);
+			p2_color = p2_color+1%5;
+		}
 		else
 			GL11.glColor3f(1.0f, 1.0f, 1.0f);
            

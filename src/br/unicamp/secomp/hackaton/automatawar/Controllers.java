@@ -36,19 +36,19 @@ public class Controllers {
 			{
 				case up1:
 					if(Keyboard.isKeyDown(up1))
-						p1.set_sel(p1.getX(), p1.getY()-1);
+						p1.up();
 					break;
 				case down1:
 					if(Keyboard.isKeyDown(down1))
-						p1.set_sel(p1.getX(), p1.getY()+1);
+						p1.down();
 					break;
 				case left1:
 					if(Keyboard.isKeyDown(left1))
-						p1.set_sel(p1.getX()-1, p1.getY());
+						p1.left();
 					break;
 				case right1:
 					if(Keyboard.isKeyDown(right1))
-						p1.set_sel(p1.getX()+1, p1.getY());
+						p1.right();
 					break;
 				case act1:
 					if(Keyboard.isKeyDown(act1))
@@ -61,19 +61,19 @@ public class Controllers {
 					
 				case up2:
 					if(Keyboard.isKeyDown(up2))
-						p2.set_sel(p2.getX(), p2.getY()-1);
+						p2.up();
 					break;
 				case down2:
 					if(Keyboard.isKeyDown(down2))
-						p2.set_sel(p2.getX(), p2.getY()+1);
+						p2.down();
 					break;
 				case left2:
 					if(Keyboard.isKeyDown(left2))
-						p2.set_sel(p2.getX()-1, p2.getY());
+						p2.left();
 					break;
 				case right2:
 					if(Keyboard.isKeyDown(right2))
-						p2.set_sel(p2.getX()+1, p2.getY());
+						p2.right();
 					break;
 				case act2:
 					if(Keyboard.isKeyDown(act2))
