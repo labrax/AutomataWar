@@ -14,8 +14,17 @@ public class Screen {
     
 	private int WIDTH = 1000, HEIGHT = 800;
 	
-	public Screen(int y, int x)
+	private GameState gs;
+	private Controllers c;
+	private Player p1, p2;
+	
+	public Screen(int y, int x, GameState gs, Controllers c, Player p1, Player p2)
 	{
+		this.gs = gs;
+		this.c = c;
+		this.p1 = p1;
+		this.p2 = p2;
+		
 		System.out.println("Hello LWJGL " + Sys.getVersion() + "!");
 		HEIGHT = y;
 		WIDTH = x;
@@ -24,13 +33,14 @@ public class Screen {
 		
 	}
 		
-	public void run(GameState gs)
+	public void run()
 	{
 		while(!Display.isCloseRequested())
 		{
-			glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+			glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+			c.handle();
 		    GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
-		    draw(gs);
+		    draw();
 	        Display.update();
 	        Display.sync(60);
 	    }
@@ -67,15 +77,16 @@ public class Screen {
 	    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	}
 	
-	public void draw(GameState gs)
+	public void draw()
 	{
-		System.out.println("Drawing");
+		//System.out.println("Drawing");
 		
         int BORDER_TOP = 0;
         
 		int gs_w = gs.getWidth();
 		int gs_h = gs.getHeight();
 		
+		// está desenhando de baixo pra cima
 		for(int i=0; i < gs_h; i++)
 		{
 			for(int j=0; j < gs_w; j++)

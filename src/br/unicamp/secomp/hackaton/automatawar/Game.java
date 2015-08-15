@@ -7,10 +7,12 @@ public class Game {
 	
 	public static void main(String args[])
 	{
-		Screen screen = new Screen(640, 800);
+		Player p1 = new Player(1), p2 = new Player(2);
+		Controllers c = new Controllers(p1, p2);
 		GameState gs = new GameState(54, 80);
+		Screen screen = new Screen(640, 800, gs, c, p1, p2);
 		
-		screen.run(gs);
+		screen.run();
 
 		/*while(true)
 		{
@@ -19,7 +21,7 @@ public class Game {
 			//pega input
 			//trabalha o jogo
 			screen.draw(gs); //desenha na tela
-			
+			 
 			if((currTime/1000 == lastTime/1000) && count_frames < 60)
 			{
 				count_frames++;
