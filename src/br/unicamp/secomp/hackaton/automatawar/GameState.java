@@ -49,7 +49,19 @@ public class GameState {
 	
 	public void compute()
 	{
-		
+		int i, j;
+		int aux[][];
+		for(i = 0; i < width; i++)
+			for(j = 0; j < height; j++)
+			{
+				aux[j][i] = rule(i, j);
+			}
+
+		for(i = 0; i < width; i++)
+			for(j = 0; j < height; j++)
+				states[i][j] = aux[i][j];
+					
+		return;
 	}
 	
 	public int getAmount(int elem, int src_x, int src_y) {
@@ -90,5 +102,6 @@ public class GameState {
 			else
 				return 0;
 		}
+		return 0;
 	}
 }
