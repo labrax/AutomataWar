@@ -73,7 +73,11 @@ public class GameState {
 					count++;
 			}
 		}
-		return count - 1;
+		
+		if (getElement(src_x, src_y) == elem)
+			count--;
+		
+		return count;
 	}
 	
 	public int getElement(int x, int y) {
@@ -86,21 +90,29 @@ public class GameState {
 	public int rule(int player, int x, int y)
 	{
 		int currstate = getElement(x, y);
-		int amount = getAmount(currstate, x, y);
+		int amount_1 = getAmount(1, x, y);
+		int amount_2 = getAmount(2, x, y);
+		int amount_3 = getAmount(3, x, y);
+		int amount_t = amount_1 + amount_2 + amount_3;
 		
-		if (currstate != 0)
+		if (currstate == 0)
 		{
-			if (amount == 2 || amount == 3) /* 2 and 3 survive */
-				return player;
-			else /* less than 2 or more than 3 die */
-				return 0;
+			if (amount_t == 3)
+			{
+				if (amount_1 == amount_t) //Apenas azuis
+					return 1;
+				else if (amount_2 == amount_t) //Apenas vermelhos
+					return 2;
+				return 3; //IT BEGINS
+			}
+			return 0;
 		}
-		else if (currstate == 0)
+		if ((currstate == 1) || (currstate == 2) || (currstate == 3))
 		{
-			if (amount == 3)
-				return player;
-			else
+			if ((amount_t != 2) && (amount_t != 3))
 				return 0;
+			else
+				return currstate;
 		}
 		return 0;
 	}
