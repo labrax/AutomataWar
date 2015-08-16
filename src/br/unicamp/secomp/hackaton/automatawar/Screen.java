@@ -45,7 +45,8 @@ public class Screen {
 			currTime = System.currentTimeMillis();
 			if(currTime >= lastTime + 1000/Game.UPDATES_PER_SECOND)
 			{
-				//gs.compute();
+				if(Game.COMPUTE)
+				gs.compute();
 				lastTime = currTime;
 			}
 			//-------------------
@@ -188,9 +189,9 @@ public class Screen {
 			{
 				if(map[j][i] == 1)
 				{
-					int cima = HEIGHT - (i*Game.MODEL_SIZE + 1);
+					int cima = HEIGHT - (j*Game.MODEL_SIZE + 1);
 					int baixo = cima - (Game.MODEL_SIZE-2);
-					int esquerda = j*Game.MODEL_SIZE + 1 + BORDER_LEFT;
+					int esquerda = i*Game.MODEL_SIZE + 1 + BORDER_LEFT;
 					int direita = esquerda + (Game.MODEL_SIZE-2);
 					
 					draw_rect(cima, baixo, esquerda, direita, 21);
@@ -209,9 +210,9 @@ public class Screen {
 			{
 				if(map2[j][i] == 1)
 				{
-					int cima = HEIGHT - (i*Game.MODEL_SIZE + 1);
+					int cima = HEIGHT - (j*Game.MODEL_SIZE + 1);
 					int baixo = cima - (Game.MODEL_SIZE-2);
-					int esquerda = Game.SCREEN_WIDTH/2 + j*Game.MODEL_SIZE + 1 + BORDER_LEFT;
+					int esquerda = Game.SCREEN_WIDTH/2 + i*Game.MODEL_SIZE + 1 + BORDER_LEFT;
 					int direita = esquerda + (Game.MODEL_SIZE-2);
 					
 					

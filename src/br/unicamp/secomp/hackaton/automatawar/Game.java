@@ -3,6 +3,7 @@ package br.unicamp.secomp.hackaton.automatawar;
 
 public class Game {	
 	public static boolean RANDOM = false; // somente para testes!
+	public static boolean COMPUTE = true;
 	
 	public static int SCREEN_WIDTH = 1500;
 	public static int SCREEN_HEIGHT = 900;
@@ -18,7 +19,7 @@ public class Game {
 	
 	public static int BARRIER = TILE_SIZE*5; //barreira a cada lado no meio
 	
-	public static int UPDATES_PER_SECOND = 1;
+	public static int UPDATES_PER_SECOND = 10;
 	public static int MOVEMENT_PER_SECOND = 10;
 	
 	public static void main(String args[])
