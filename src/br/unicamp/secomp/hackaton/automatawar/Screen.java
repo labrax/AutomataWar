@@ -3,12 +3,12 @@ package br.unicamp.secomp.hackaton.automatawar;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.Sys;
 import org.lwjgl.opengl.*;
-import org.lwjgl.util.Color;
 
 import static org.lwjgl.opengl.GL11.*;
 
 import java.awt.Font;
-import org.newdawn.slick.UnicodeFont;
+import org.newdawn.slick.Color;
+import org.newdawn.slick.TrueTypeFont;
 
 public class Screen {
 	int p1_color = 0;
@@ -20,7 +20,7 @@ public class Screen {
 	private Controllers c;
 	private Player p1, p2;
 	
-	UnicodeFont uf;
+	TrueTypeFont uf;
 	
 	public Screen(int y, int x, GameState gs, Controllers c, Player p1, Player p2)
 	{
@@ -32,10 +32,6 @@ public class Screen {
 		System.out.println("Hello LWJGL " + Sys.getVersion() + "!");
 		HEIGHT = y;
 		WIDTH = x;
-		
-		Font awtFont = new Font("Times New Roman", Font.BOLD, 12);
-		uf = new UnicodeFont(awtFont, 0, false, false);
-
 		
 		init();
 	}
@@ -103,8 +99,6 @@ public class Screen {
 		draw_rect(0, HEIGHT-BORDER_TOP, 0+BORDER_LEFT, WIDTH-BORDER_LEFT, 4); //desenha fundo preto
 		
 		draw_rect(0, HEIGHT-BORDER_TOP, Game.SCREEN_WIDTH/2-Game.BARRIER, Game.SCREEN_WIDTH/2+Game.BARRIER, 5); //desenha zona sem contato
-        
-		uf.drawString(0.1f, 0.1f, "THE LIGHTWEIGHT JAVA GAMES LIBRARY");
 		
 		int gs_w = gs.getWidth();
 		int gs_h = gs.getHeight();
@@ -148,7 +142,7 @@ public class Screen {
 		else if(cor == 2) //p2
 			GL11.glColor3f(1.0f, 0f, 0.0f);
 		else if(cor == 3) //neutro
-			GL11.glColor3f(1.0f, 0.647f, 0.5f);
+			GL11.glColor3f(0.9f, 0.547f, 0.4f);
 		else if(cor == 4) //fundo
 			GL11.glColor3f(0.07f, 0.07f, 0.07f);
 		else if(cor == 5) //terra neutra
