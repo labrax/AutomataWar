@@ -66,10 +66,26 @@ public class Screen {
 			};
 		Model m = new Model("Base", v8, 15, 15);
 		
-		p3.set_sel(0, Game.STATES_HEIGHT/2 - 15);
+		p3.set_sel(0, Game.STATES_HEIGHT/2 - 10);
 		gs.addModel(p3, m);
 		
-		p3.set_sel(Game.STATES_WIDTH-m.getWidth(), Game.STATES_HEIGHT/2);
+		p3.set_sel(Game.STATES_WIDTH-m.getWidth(), Game.STATES_HEIGHT/2+10-m.getHeight());
+		gs.addModel(p3, m);
+		
+		int v9[][] =
+			{
+				{1, 1, 0, 0, 1, 1},
+				{1, 0, 0, 1, 0, 1},
+				{0, 1, 0, 0, 0, 0},
+				{0, 0, 0, 0, 1, 0},
+				{1, 0, 1, 0, 0, 1},
+				{1, 1, 0, 0, 1, 1}
+			};
+		m = new Model("Oscilador 2", v9, 6, 6);
+		p3.set_sel(m.getWidth()+4, Game.STATES_HEIGHT/2 + 10);
+		gs.addModel(p3, m);
+		
+		p3.set_sel(Game.STATES_WIDTH-m.getWidth()-10, Game.STATES_HEIGHT/2-10-m.getHeight());
 		gs.addModel(p3, m);
 	}
 	
