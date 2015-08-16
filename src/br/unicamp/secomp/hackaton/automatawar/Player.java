@@ -4,6 +4,8 @@ public class Player {
 	private int sel_x, sel_y;
 	private int op;
 	
+	long time;
+	
 	private int mode_weapon = 0;
 	private int selected_weapon = 0;
 	
@@ -38,17 +40,24 @@ public class Player {
 		return sel_y;
 	}
 	
+	public long getTime()
+	{
+		return time;
+	}
+	
 	public void up(boolean down)
 	{
+		System.out.println(vertical);
 		if(down)
 		{
-			//System.out.println("Player " + player_number + ": is down!");
+			System.out.println("Player " + player_number + ": is down!");
 			this.set_sel(this.getX(), this.getY()-1);
 			vertical=-1;
+			time = System.currentTimeMillis();
 		}
 		else
 		{
-			//System.out.println("Player " + player_number + ": is up!");
+			System.out.println("Player " + player_number + ": is up!");
 			vertical=0;
 		}
 	}
@@ -59,6 +68,7 @@ public class Player {
 		{
 			this.set_sel(this.getX(), this.getY()+1);
 			vertical=+1;
+			time = System.currentTimeMillis();
 		}
 		else
 			vertical=0;
@@ -70,6 +80,7 @@ public class Player {
 		{
 			this.set_sel(this.getX()-1, this.getY());
 			horizontal=-1;
+			time = System.currentTimeMillis();
 		}
 		else
 		{
@@ -83,6 +94,7 @@ public class Player {
 		{
 			this.set_sel(this.getX()+1, this.getY());
 			horizontal=+1;
+			time = System.currentTimeMillis();
 		}
 		else
 			horizontal=0;
@@ -98,6 +110,11 @@ public class Player {
 		{
 			this.set_sel(this.getX(), this.getY()+vertical);
 		}
+	}
+	
+	public void updateTime()
+	{
+		time = System.currentTimeMillis();
 	}
 	
 	public void act()

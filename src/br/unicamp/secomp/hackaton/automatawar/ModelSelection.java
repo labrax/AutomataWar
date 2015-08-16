@@ -10,6 +10,11 @@ public class ModelSelection {
 		insertModels();
 	}
 	
+	public int getAmount()
+	{
+		return models.size();
+	}
+	
 	public Model getModel(int i)
 	{
 		return models.get(i);
@@ -44,5 +49,17 @@ public class ModelSelection {
 			};
 		m = new Model("Blinker Wall", v2, 5, 5);
 		addModel(m);
+		
+		int v3[][] =
+			{
+				{0, 0, 0, 0, 0, 0},
+				{0, 0, 1, 1, 0, 0},
+				{0, 1, 0, 0, 1, 0},
+				{0, 0, 1, 1, 0, 0},
+				{0, 0, 0, 0, 0, 0}
+			};
+		m = new Model("Beehive", v3, 5, 6);
+		addModel(m);
+		
 	}
 }

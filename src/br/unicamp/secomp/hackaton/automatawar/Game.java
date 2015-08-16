@@ -17,6 +17,7 @@ public class Game {
 	public static int BARRIER = TILE_SIZE*5; //barreira a cada lado no meio
 	
 	public static int UPDATES_PER_SECOND = 1;
+	public static int MOVEMENT_PER_SECOND = 10;
 	
 	public static void main(String args[])
 	{

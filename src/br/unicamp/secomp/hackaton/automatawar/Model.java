@@ -8,8 +8,8 @@ public class Model {
 	public Model(String name, int[][] map, int height, int width)
 	{
 		this.map = map;
-		this.height = 20;
-		this.width = 20;
+		this.height = height;
+		this.width = width;
 		this.name = name;
 	}
 	

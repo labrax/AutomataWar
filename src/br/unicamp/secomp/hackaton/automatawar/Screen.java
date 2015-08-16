@@ -32,7 +32,7 @@ public class Screen {
 		
 	public void run()
 	{
-		long currTime, lastTime=0, lastKeyTime = 0;
+		long currTime, lastTime=0;
 		while(!Display.isCloseRequested())
 		{
 			glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
@@ -45,10 +45,18 @@ public class Screen {
 				lastTime = currTime;
 			}
 			
-			if(currTime <= lastKeyTime + 1000/5)
+			currTime = System.currentTimeMillis();
+			
+			if(currTime >= p1.getTime() + 1000/Game.MOVEMENT_PER_SECOND)
 			{
 				p1.movimento_acumulado();
+				p1.updateTime();
+			}
+			
+			if(currTime >= p2.getTime() + 1000/Game.MOVEMENT_PER_SECOND)
+			{
 				p2.movimento_acumulado();
+				p2.updateTime();
 			}
 			
 			if(p1.getAcao() == 1)
@@ -63,9 +71,6 @@ public class Screen {
 					;
 					//adicionar elemento!
 			}
-			
-			lastKeyTime = currTime;
-			
 			
 		    GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
 		    draw();
