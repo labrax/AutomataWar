@@ -5,12 +5,13 @@ public class Game {
 	public static boolean RANDOM = false; // somente para testes!
 	public static boolean COMPUTE = true;
 	
-	public static int SCREEN_WIDTH = 1500; //1050
-	public static int SCREEN_HEIGHT = 900;
+	public static boolean FULLSCREEN = true;
+	public static int SCREEN_WIDTH = 1920; //1050
+	public static int SCREEN_HEIGHT = 1080;
 	
 	public static int BORDER_TOP = 10;
 	
-	public static int TILE_SIZE = 15; //15
+	public static int TILE_SIZE = 10; //15
 	
 	public static int MODEL_SIZE = 5;
 	
@@ -22,18 +23,18 @@ public class Game {
 	public static int UPDATES_PER_SECOND = 10;
 	public static int MOVEMENT_PER_SECOND = 15;
 	
-	public static int POINTS_PER_MODEL_PIXEL = 10; //fator de multiplicação de pontos
-	public static int POINTS_PER_UNIT_ENEMY_BASE = 3;
-	public static int POINTS_PER_MY_OSCILATOR = 5;
+	public static int POINTS_PER_MODEL_PIXEL = 7; //fator de multiplicação de pontos
+	public static int POINTS_PER_UNIT_ENEMY_BASE = 5;
+	public static int POINTS_PER_MY_OSCILATOR = 15;
 	
-	public static long GAME_TIME = 100; //tempo em segundos
+	public static long GAME_TIME = 180; //tempo em segundos
 	public static int POINTS_SIZE = 8;
 	
 	public static boolean ITS_A_PUTARIA = false; //CHEAT MODE!
 	
-	public static boolean SHIELD = false;
+	public static boolean SHIELD = true;
 	public static boolean MAY_GLIDER = true;
-	public static boolean FACTORY = false;
+	public static boolean FACTORY = true;
 	public static boolean SPACESHIP = true;
 	
 	public static void main(String args[])
