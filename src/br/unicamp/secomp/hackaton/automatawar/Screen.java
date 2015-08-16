@@ -6,10 +6,6 @@ import org.lwjgl.opengl.*;
 
 import static org.lwjgl.opengl.GL11.*;
 
-import java.awt.Font;
-import org.newdawn.slick.Color;
-import org.newdawn.slick.TrueTypeFont;
-
 public class Screen {
 	int p1_color = 0;
 	int p2_color = 0;
@@ -19,8 +15,6 @@ public class Screen {
 	private GameState gs;
 	private Controllers c;
 	private Player p1, p2;
-	
-	TrueTypeFont uf;
 	
 	public Screen(int y, int x, GameState gs, Controllers c, Player p1, Player p2)
 	{

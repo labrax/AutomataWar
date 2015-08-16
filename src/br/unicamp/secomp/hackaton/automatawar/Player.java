@@ -37,22 +37,22 @@ public class Player {
 	
 	public void up()
 	{
-		this.set_sel(this.getX(), this.getY()-1);
+		this.set_sel(this.getX(), this.getY()-2);
 	}
 	
 	public void down()
 	{
-		this.set_sel(this.getX(), this.getY()+1);
+		this.set_sel(this.getX(), this.getY()+2);
 	}
 	
 	public void left()
 	{
-		this.set_sel(this.getX()-1, this.getY());
+		this.set_sel(this.getX()-2, this.getY());
 	}
 	
 	public void right()
 	{
-		this.set_sel(this.getX()+1, this.getY());
+		this.set_sel(this.getX()+2, this.getY());
 	}
 	
 	public void act()
