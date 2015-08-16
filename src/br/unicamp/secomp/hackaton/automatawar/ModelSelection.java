@@ -7,6 +7,7 @@ public class ModelSelection {
 	
 	public ModelSelection()
 	{
+		models = new ArrayList<Model>();
 		insertModels();
 	}
 	
@@ -27,7 +28,6 @@ public class ModelSelection {
 	
 	public void insertModels()
 	{
-		
 		int v[][] =
 			{
 				{ 0, 0, 0, 0},

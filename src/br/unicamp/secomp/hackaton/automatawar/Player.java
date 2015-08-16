@@ -7,7 +7,7 @@ public class Player {
 	long time;
 	
 	private int mode_weapon = 0;
-	private int selected_weapon = 0;
+	private int selected_model = 0;
 	
 	private int player_number; //1 or 2
 	
@@ -28,6 +28,11 @@ public class Player {
 			sel_y = y;
 		
 		//System.out.println("Player " + player_number + " at: " + sel_x + "," + sel_y);
+	}
+	
+	public int getNumber()
+	{
+		return player_number;
 	}
 	
 	public int getX()
@@ -126,7 +131,7 @@ public class Player {
 	public void sel()
 	{
 		System.out.println("Player + " + player_number + " sel.");
-		op = 2;
+		selected_model++;
 	}
 	
 	public int getAcao()
@@ -134,5 +139,10 @@ public class Player {
 		int ret = op;
 		op = 0;
 		return ret;
+	}
+	
+	public int getModel()
+	{
+		return selected_model;
 	}
 }

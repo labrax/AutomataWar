@@ -2,7 +2,7 @@ package br.unicamp.secomp.hackaton.automatawar;
 
 
 public class Game {	
-	public static boolean RANDOM = false;
+	public static boolean RANDOM = true;
 	
 	public static int SCREEN_WIDTH = 1500;
 	public static int SCREEN_HEIGHT = 900;
@@ -24,10 +24,11 @@ public class Game {
 		Player p1 = new Player(1), p2 = new Player(2);
 		Controllers c = new Controllers(p1, p2);
 		GameState gs = new GameState(STATES_HEIGHT, STATES_WIDTH);
-		Screen screen = new Screen(SCREEN_HEIGHT, SCREEN_WIDTH, gs, c, p1, p2);
+		ModelSelection ms = new ModelSelection();
+		Screen screen = new Screen(SCREEN_HEIGHT, SCREEN_WIDTH, gs, c, p1, p2, ms);
 		
-		p1.set_sel(STATES_WIDTH/2-1, STATES_HEIGHT/2);
-		p2.set_sel(STATES_WIDTH/2+1, STATES_HEIGHT/2);
+		p1.set_sel(STATES_WIDTH/2-5, STATES_HEIGHT/2);
+		p2.set_sel(STATES_WIDTH/2+5, STATES_HEIGHT/2);
 		
 		screen.run(); //game!
 	}

@@ -16,12 +16,15 @@ public class Screen {
 	private Controllers c;
 	private Player p1, p2;
 	
-	public Screen(int y, int x, GameState gs, Controllers c, Player p1, Player p2)
+	ModelSelection ms;
+	
+	public Screen(int y, int x, GameState gs, Controllers c, Player p1, Player p2, ModelSelection ms)
 	{
 		this.gs = gs;
 		this.c = c;
 		this.p1 = p1;
 		this.p2 = p2;
+		this.ms = ms;
 		
 		System.out.println("Hello LWJGL " + Sys.getVersion() + "!");
 		HEIGHT = y;
@@ -38,44 +41,70 @@ public class Screen {
 			glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 			c.handle();
 			
+			//------------------- atualiza jogo
 			currTime = System.currentTimeMillis();
 			if(currTime >= lastTime + 1000/Game.UPDATES_PER_SECOND)
 			{
 				gs.compute();
 				lastTime = currTime;
 			}
+			//-------------------
 			
+			//------------------- movimento jogador
 			currTime = System.currentTimeMillis();
-			
 			if(currTime >= p1.getTime() + 1000/Game.MOVEMENT_PER_SECOND)
 			{
 				p1.movimento_acumulado();
 				p1.updateTime();
 			}
-			
 			if(currTime >= p2.getTime() + 1000/Game.MOVEMENT_PER_SECOND)
 			{
 				p2.movimento_acumulado();
 				p2.updateTime();
 			}
+			//-------------------
 			
+			//------------------- adiciona modelos
 			if(p1.getAcao() == 1)
 			{
-				if(p1.getX() < (Game.STATES_WIDTH-Game.BARRIER/Game.TILE_SIZE))
-					;
-					//adicionar elemento!
+				if(p1.getX() < (Game.STATES_WIDTH - Game.BARRIER/Game.TILE_SIZE))
+				{
+					Model n = ms.getModel(p1.getModel());
+					if(p1.getX() + n.getWidth() < Game.STATES_WIDTH)
+					{
+						if(p1.getY() + n.getHeight() < Game.STATES_HEIGHT)
+						{
+							System.out.println("Inserting for p1");
+							gs.addModel(p1, n);
+						}
+					}
+				}
 			}
 			if(p2.getAcao() == 1)
 			{
-				if(p2.getX() < (Game.STATES_WIDTH-Game.BARRIER/Game.TILE_SIZE))
-					;
-					//adicionar elemento!
+				if(p2.getX() < (Game.STATES_WIDTH - Game.BARRIER/Game.TILE_SIZE))
+				{
+					Model n = ms.getModel(p2.getModel());
+					if(p2.getX() + n.getWidth() < Game.STATES_WIDTH)
+					{
+						if(p2.getY() + n.getHeight() < Game.STATES_HEIGHT)
+						{
+							System.out.println("Inserting for p2");
+							gs.addModel(p2, n);
+						}
+					}
+				}
 			}
+			//------------------
 			
+			//limpa tela
 		    GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
+		    
+		    //desenha tudo
 		    draw();
+		    
 	        Display.update();
-	        Display.sync(60);
+	        Display.sync(60); //60 fps?
 	    }
 		     
 	    Display.destroy();

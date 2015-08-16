@@ -32,8 +32,23 @@ public class GameState {
 		    		if(j == x-1)
 		    			System.out.println();
 		    	}
+		}   
+	}
+	
+	public void addModel(Player p, Model a)
+	{
+		System.out.println("" + a.getHeight() + "," + a.getWidth());
+		
+		int map[][] = a.getMap();
+		
+		for(int j = 0; j < a.getHeight(); j++)
+		{
+			for(int i = 0; i < a.getWidth(); i++)
+			{
+				if(map[j][i] == 1)
+					states[p.getY() + j][p.getX() + i] = p.getNumber();
+			}
 		}
-	    
 	}
 	
 	public int getState(int y, int x)
