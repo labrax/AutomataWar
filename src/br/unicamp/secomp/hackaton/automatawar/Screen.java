@@ -23,6 +23,8 @@ public class Screen {
 	
 	private boolean gg = false;
 	
+	int high1=500, high2=500;
+	
 	public Screen(int y, int x, GameState gs, Controllers c, Player p1, Player p2, ModelSelection ms)
 	{
 		this.gs = gs;
@@ -94,6 +96,11 @@ public class Screen {
 					if(gs.isGG())
 					{
 						gg = true;
+						
+						if(gs.isGGtime())
+							Sound.playSoundTimeLimit();
+						else
+							Sound.playSoundAcabou();
 						System.out.println("GG!");
 					}
 				}
@@ -116,25 +123,27 @@ public class Screen {
 				//------------------- adiciona modelos
 				if(p1.getAcao() == 1)
 				{
-					Model n = ms.getModel(p1.getModel()%ms.getAmount());
+					Model n = ms.getModel(1, p1.getModel()%ms.getAmount(1));
 					if((p1.getX() + n.getWidth() <= (Game.STATES_WIDTH/2 - Game.BARRIER/Game.TILE_SIZE + 1)) || Game.ITS_A_PUTARIA)
 					{
 						if(p1.getY() + n.getHeight() <= Game.STATES_HEIGHT)
 						{
 							//System.out.println("Inserting for p1");
 							gs.addModel(p1, n);
+							Sound.playSoundPlacement();
 						}
 					}
 				}
 				if(p2.getAcao() == 1)
 				{
-					Model n = ms.getModel(p2.getModel()%ms.getAmount());
+					Model n = ms.getModel(2, p2.getModel()%ms.getAmount(2));
 					if( ((p2.getX() >= (Game.STATES_WIDTH/2 + Game.BARRIER/Game.TILE_SIZE)) || Game.ITS_A_PUTARIA ) && (p2.getX() + n.getWidth() < Game.STATES_WIDTH))
 					{
 						if(p2.getY() + n.getHeight() <= Game.STATES_HEIGHT)
 						{
 							//System.out.println("Inserting for p2");
 							gs.addModel(p2, n);
+							Sound.playSoundPlacement();
 						}
 					}
 				}
@@ -248,7 +257,7 @@ public class Screen {
 		}
 		
 		//--- draw new models
-		Model m = ms.getModel(p1.getModel()%ms.getAmount());
+		Model m = ms.getModel(1, p1.getModel()%ms.getAmount(1));
 		int w = m.getWidth();
 		int h = m.getHeight();
 		int map[][] = m.getMap();
@@ -269,7 +278,7 @@ public class Screen {
 			}
 		}
 		
-		Model m2 = ms.getModel(p2.getModel()%ms.getAmount());
+		Model m2 = ms.getModel(2, p2.getModel()%ms.getAmount(2));
 		int w2 = m2.getWidth();
 		int h2 = m2.getHeight();
 		int map2[][] = m2.getMap();
@@ -295,8 +304,20 @@ public class Screen {
 		draw_number((int) gs.getTimeleft(), HEIGHT-Game.POINTS_SIZE*5, Game.SCREEN_WIDTH/2 - Game.POINTS_SIZE*5/2, Game.POINTS_SIZE, 4, true);
 		
 		//--- draw points
-		draw_number(gs.getPontos1(), HEIGHT-Game.POINTS_SIZE*5, Game.SCREEN_WIDTH/4 - Game.POINTS_SIZE*5/2, Game.POINTS_SIZE, 1, false);
-		draw_number(gs.getPontos2(), HEIGHT-Game.POINTS_SIZE*5, Game.SCREEN_WIDTH*3/4 - Game.POINTS_SIZE*5/2, Game.POINTS_SIZE, 2, false);
+		int pontos1 = gs.getPontos1();
+		if(pontos1 > high1 + 500)
+		{
+			high1 = pontos1;
+			Sound.playSoundPontos();
+		}
+		int pontos2 = gs.getPontos2();
+		if(pontos2 > high2 + 500)
+		{
+			high2 = pontos2;
+			Sound.playSoundPontos();
+		}
+		draw_number(pontos1, HEIGHT-Game.POINTS_SIZE*5, Game.SCREEN_WIDTH/4 - Game.POINTS_SIZE*5/2, Game.POINTS_SIZE, 1, false);
+		draw_number(pontos2, HEIGHT-Game.POINTS_SIZE*5, Game.SCREEN_WIDTH*3/4 - Game.POINTS_SIZE*5/2, Game.POINTS_SIZE, 2, false);
 		//---
 		
 		if(gg)
