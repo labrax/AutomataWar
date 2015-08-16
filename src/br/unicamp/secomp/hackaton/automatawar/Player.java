@@ -124,13 +124,13 @@ public class Player {
 	
 	public void act()
 	{
-		System.out.println("Player + " + player_number + " act.");
+		//System.out.println("Player + " + player_number + " act.");
 		op = 1;
 	}
 	
 	public void sel()
 	{
-		System.out.println("Player + " + player_number + " sel.");
+		//System.out.println("Player + " + player_number + " sel.");
 		selected_model++;
 	}
 	

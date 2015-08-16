@@ -117,11 +117,11 @@ public class Screen {
 				if(p1.getAcao() == 1)
 				{
 					Model n = ms.getModel(p1.getModel()%ms.getAmount());
-					if(p1.getX() + n.getWidth() <= (Game.STATES_WIDTH/2 - Game.BARRIER/Game.TILE_SIZE + 1))
+					if((p1.getX() + n.getWidth() <= (Game.STATES_WIDTH/2 - Game.BARRIER/Game.TILE_SIZE + 1)) || Game.ITS_A_PUTARIA)
 					{
 						if(p1.getY() + n.getHeight() <= Game.STATES_HEIGHT)
 						{
-							System.out.println("Inserting for p1");
+							//System.out.println("Inserting for p1");
 							gs.addModel(p1, n);
 						}
 					}
@@ -129,11 +129,11 @@ public class Screen {
 				if(p2.getAcao() == 1)
 				{
 					Model n = ms.getModel(p2.getModel()%ms.getAmount());
-					if((p2.getX() >= (Game.STATES_WIDTH/2 + Game.BARRIER/Game.TILE_SIZE)) && (p2.getX() + n.getWidth() < Game.STATES_WIDTH))
+					if( ((p2.getX() >= (Game.STATES_WIDTH/2 + Game.BARRIER/Game.TILE_SIZE)) || Game.ITS_A_PUTARIA ) && (p2.getX() + n.getWidth() < Game.STATES_WIDTH))
 					{
 						if(p2.getY() + n.getHeight() <= Game.STATES_HEIGHT)
 						{
-							System.out.println("Inserting for p2");
+							//System.out.println("Inserting for p2");
 							gs.addModel(p2, n);
 						}
 					}
@@ -292,16 +292,83 @@ public class Screen {
 		//---
 		
 		//--- draw time limit
-		draw_number((int) gs.getTimeleft(), HEIGHT-Game.POINTS_SIZE*5, Game.SCREEN_WIDTH/2 - Game.POINTS_SIZE*5/2, Game.POINTS_SIZE, 4);
+		draw_number((int) gs.getTimeleft(), HEIGHT-Game.POINTS_SIZE*5, Game.SCREEN_WIDTH/2 - Game.POINTS_SIZE*5/2, Game.POINTS_SIZE, 4, true);
 		
 		//--- draw points
-		draw_number(gs.getPontos1(), HEIGHT-Game.POINTS_SIZE*5, Game.SCREEN_WIDTH/4 - Game.POINTS_SIZE*5/2, Game.POINTS_SIZE, 1);
-		draw_number(gs.getPontos2(), HEIGHT-Game.POINTS_SIZE*5, Game.SCREEN_WIDTH*3/4 - Game.POINTS_SIZE*5/2, Game.POINTS_SIZE, 2);
+		draw_number(gs.getPontos1(), HEIGHT-Game.POINTS_SIZE*5, Game.SCREEN_WIDTH/4 - Game.POINTS_SIZE*5/2, Game.POINTS_SIZE, 1, false);
+		draw_number(gs.getPontos2(), HEIGHT-Game.POINTS_SIZE*5, Game.SCREEN_WIDTH*3/4 - Game.POINTS_SIZE*5/2, Game.POINTS_SIZE, 2, false);
 		//---
+		
+		if(gg)
+		{
+			draw_rect(Game.SCREEN_HEIGHT/2 - 100, Game.SCREEN_HEIGHT/2 + 100, Game.SCREEN_WIDTH/2 - 320, Game.SCREEN_WIDTH/2 + 320, 4);
+			int pontos_vencedor = gs.getPontos1();
+			int cor = 1;
+			if(gs.getPontos1() < gs.getPontos2())
+			{
+				pontos_vencedor = gs.getPontos2();
+				cor = 2;
+			}
+			else if(gs.getPontos1() == gs.getPontos2())
+			{
+				pontos_vencedor = 0;
+				cor = 3;
+			}
+			draw_number(pontos_vencedor, Game.SCREEN_HEIGHT/2 + 50, Game.SCREEN_WIDTH/2 + 60, 25, cor, false);
+		}
 	}
 	
-	public void draw_number(int number, int ref_y, int ref_x, int size_pixel, int color)
+	public void draw_number(int number, int ref_y, int ref_x, int size_pixel, int color, boolean time)
 	{
+		if(!time)
+		{
+			if(number/10000 >= 0)
+			{
+				Model n0 = numbers.getModel((int) (number/10000)%10);
+				int w_N = n0.getWidth();
+				int h_N = n0.getHeight();
+				int map_N[][] = n0.getMap();
+				
+				for(int j=0; j<h_N; j++)
+				{
+					for(int i=0; i<w_N; i++)
+					{
+						if(map_N[j][i] == 1)
+						{
+							int cima = ref_y - (j*size_pixel + 1);
+							int baixo = cima - (size_pixel-2);
+							int esquerda = ref_x + i*size_pixel + 1 - 3*size_pixel*w_N;
+							int direita = esquerda + (size_pixel-2);
+							
+							draw_rect(cima, baixo, esquerda, direita, color);
+						}
+					}
+				}
+			}
+			if(number/1000 >= 0)
+			{
+				Model n0 = numbers.getModel((int) (number/1000)%10);
+				int w_N = n0.getWidth();
+				int h_N = n0.getHeight();
+				int map_N[][] = n0.getMap();
+				
+				for(int j=0; j<h_N; j++)
+				{
+					for(int i=0; i<w_N; i++)
+					{
+						if(map_N[j][i] == 1)
+						{
+							int cima = ref_y - (j*size_pixel + 1);
+							int baixo = cima - (size_pixel-2);
+							int esquerda = ref_x + i*size_pixel + 1 - 2*size_pixel*w_N;
+							int direita = esquerda + (size_pixel-2);
+							
+							draw_rect(cima, baixo, esquerda, direita, color);
+						}
+					}
+				}
+			}
+		}
 		if(number/100 >= 0)
 		{
 			Model n0 = numbers.getModel((int) (number/100)%10);
@@ -315,10 +382,10 @@ public class Screen {
 				{
 					if(map_N[j][i] == 1)
 					{
-						int cima = ref_y - (j*Game.POINTS_SIZE + 1);
-						int baixo = cima - (Game.POINTS_SIZE-2);
-						int esquerda = ref_x + i*Game.POINTS_SIZE + 1 - Game.POINTS_SIZE*w_N;
-						int direita = esquerda + (Game.POINTS_SIZE-2);
+						int cima = ref_y - (j*size_pixel + 1);
+						int baixo = cima - (size_pixel-2);
+						int esquerda = ref_x + i*size_pixel + 1 - size_pixel*w_N;
+						int direita = esquerda + (size_pixel-2);
 						
 						draw_rect(cima, baixo, esquerda, direita, color);
 					}
@@ -339,10 +406,10 @@ public class Screen {
 				{
 					if(map_N[j][i] == 1)
 					{
-						int cima = ref_y - (j*Game.POINTS_SIZE + 1);
-						int baixo = cima - (Game.POINTS_SIZE-2);
-						int esquerda = ref_x + i*Game.POINTS_SIZE + 1;
-						int direita = esquerda + (Game.POINTS_SIZE-2);
+						int cima = ref_y - (j*size_pixel + 1);
+						int baixo = cima - (size_pixel-2);
+						int esquerda = ref_x + i*size_pixel + 1;
+						int direita = esquerda + (size_pixel-2);
 						
 						draw_rect(cima, baixo, esquerda, direita, color);
 					}
@@ -367,10 +434,10 @@ public class Screen {
 			{
 				if(map_N[j][i] == 1)
 				{
-					int cima = ref_y - (j*Game.POINTS_SIZE + 1);
-					int baixo = cima - (Game.POINTS_SIZE-2);
-					int esquerda = ref_x + i*Game.POINTS_SIZE + 1 + Game.POINTS_SIZE*w_N;
-					int direita = esquerda + (Game.POINTS_SIZE-2);
+					int cima = ref_y - (j*size_pixel + 1);
+					int baixo = cima - (size_pixel-2);
+					int esquerda = ref_x + i*size_pixel + 1 + size_pixel*w_N;
+					int direita = esquerda + (size_pixel-2);
 					
 					draw_rect(cima, baixo, esquerda, direita, color);
 				}

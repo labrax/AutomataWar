@@ -29,6 +29,8 @@ public class Game {
 	public static long GAME_TIME = 100; //tempo em segundos
 	public static int POINTS_SIZE = 8;
 	
+	public static boolean ITS_A_PUTARIA = false; //CHEAT MODE!
+	
 	public static void main(String args[])
 	{
 		boolean cont = false;
