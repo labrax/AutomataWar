@@ -169,7 +169,7 @@ public class Screen {
 						gs.compute(); //calcula novo estado e pontos
 					lastTime = currTime;
 					
-					if(gs.isGG())
+					if(gs.isGG() && !Game.NEVER_GG)
 					{
 						gg = true;
 						
@@ -268,6 +268,8 @@ public class Screen {
 	    	Display.setDisplayMode(new DisplayMode(WIDTH, HEIGHT));
 	        Display.setTitle("Automata War!");
 	        Display.setFullscreen(Game.FULLSCREEN);
+	        if(Game.FULLSCREEN)
+	        	System.setProperty("org.lwjgl.opengl.Window.undecorated", "true");
 	        Display.create();
 	    }
 	    catch(LWJGLException e)
@@ -369,7 +371,7 @@ public class Screen {
 				{
 					int cima = HEIGHT - (j*Game.MODEL_SIZE + 1);
 					int baixo = cima - (Game.MODEL_SIZE-2);
-					int esquerda = Game.SCREEN_WIDTH/2 + i*Game.MODEL_SIZE + 1 + BORDER_LEFT;
+					int esquerda = Game.SCREEN_WIDTH-Game.MODEL_SIZE*w2 + i*Game.MODEL_SIZE + 1 + BORDER_LEFT;
 					int direita = esquerda + (Game.MODEL_SIZE-2);
 					
 					draw_rect(cima, baixo, esquerda, direita, 22);

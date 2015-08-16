@@ -63,12 +63,12 @@ public class GameState {
 		if(p.getNumber() == 1)
 		{
 			pontos2_acumulado += count_pixels*Game.POINTS_PER_MODEL_PIXEL;
-			System.out.println("Player 1 added a " + a.getName() + "! Player 2 awarded " + count_pixels*Game.POINTS_PER_MODEL_PIXEL);
+			System.out.println("Player 1 added a \"" + a.getName() + "\"! Player 2 awarded " + count_pixels*Game.POINTS_PER_MODEL_PIXEL);
 		}
 		else if(p.getNumber() == 2)
 		{
 			pontos1_acumulado += count_pixels*Game.POINTS_PER_MODEL_PIXEL;
-			System.out.println("Player 2 added a " + a.getName() + "! Player 1 awarded " + count_pixels*Game.POINTS_PER_MODEL_PIXEL);
+			System.out.println("Player 2 added a \"" + a.getName() + "\"! Player 1 awarded " + count_pixels*Game.POINTS_PER_MODEL_PIXEL);
 		}
 		
 	}
