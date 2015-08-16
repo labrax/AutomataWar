@@ -61,5 +61,48 @@ public class ModelSelection {
 		m = new Model("Beehive", v3, 5, 6);
 		addModel(m);
 		
+		int v4[][] =
+			{
+				{0, 0, 0, 0, 0},
+				{0, 1, 1, 1, 0},
+				{0, 0, 0, 1, 0},
+				{0, 0, 1, 0, 0},
+				{0, 0, 0, 0, 0}
+			};
+		m = new Model("Glider Nordeste", v4, 5, 5);
+		addModel(m);
+		
+		int v5[][] =
+			{
+				{0, 0, 0, 0, 0},
+				{0, 1, 1, 1, 0},
+				{0, 1, 0, 0, 0},
+				{0, 0, 1, 0, 0},
+				{0, 0, 0, 0, 0}
+			};
+		m = new Model("Glider Noroeste", v5, 5, 5);
+		addModel(m);
+		
+		int v6[][] =
+			{
+				{0 ,0 ,0 ,0 ,0},
+				{0 ,0 ,1 ,0 ,0},
+				{0 ,0 ,0 ,1 ,0},
+				{0 ,1 ,1 ,1 ,0},
+				{0 ,0 ,0 ,0 ,0}
+			};
+		m = new Model("Glider Sudeste", v6, 5, 5);
+		addModel(m);
+		
+		int v7[][] =
+			{
+				{0 ,0 ,0 ,0 ,0},
+				{0 ,0 ,1 ,0 ,0},
+				{0 ,1 ,0 ,0 ,0},
+				{0 ,1 ,1 ,1 ,0},
+				{0 ,0 ,0 ,0 ,0}
+			};
+		m = new Model("Glider Sudoeste", v7, 5, 5);
+		addModel(m);
 	}
 }

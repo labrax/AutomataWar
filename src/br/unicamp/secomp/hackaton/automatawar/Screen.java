@@ -67,7 +67,7 @@ public class Screen {
 			//------------------- adiciona modelos
 			if(p1.getAcao() == 1)
 			{
-				Model n = ms.getModel(p1.getModel());
+				Model n = ms.getModel(p1.getModel()%ms.getAmount());
 				if(p1.getX() + n.getWidth() <= (Game.STATES_WIDTH/2 - Game.BARRIER/Game.TILE_SIZE + 1))
 				{
 					if(p1.getY() + n.getHeight() <= Game.STATES_HEIGHT)
@@ -79,7 +79,7 @@ public class Screen {
 			}
 			if(p2.getAcao() == 1)
 			{
-				Model n = ms.getModel(p2.getModel());
+				Model n = ms.getModel(p2.getModel()%ms.getAmount());
 				if(p2.getX() >= (Game.STATES_WIDTH/2 + Game.BARRIER/Game.TILE_SIZE))
 				{
 					if(p2.getY() + n.getHeight() <= Game.STATES_HEIGHT)
@@ -136,7 +136,6 @@ public class Screen {
 	public void draw()
 	{
 		//System.out.println("Drawing");
-		
         int BORDER_TOP = Game.BORDER_TOP * Game.TILE_SIZE;
         int BORDER_LEFT = 0;
         
@@ -174,6 +173,49 @@ public class Screen {
 				else if(gs.getState(i, j) != 10)
 				{
 					draw_rect(cima, baixo, esquerda, direita, gs.getState(i, j));
+				}
+			}
+		}
+		
+		Model m = ms.getModel(p1.getModel()%ms.getAmount());
+		int w = m.getWidth();
+		int h = m.getHeight();
+		int map[][] = m.getMap();
+		
+		for(int j=0; j<h; j++)
+		{
+			for(int i=0; i<w; i++)
+			{
+				if(map[j][i] == 1)
+				{
+					int cima = HEIGHT - (i*Game.MODEL_SIZE + 1);
+					int baixo = cima - (Game.MODEL_SIZE-2);
+					int esquerda = j*Game.MODEL_SIZE + 1 + BORDER_LEFT;
+					int direita = esquerda + (Game.MODEL_SIZE-2);
+					
+					draw_rect(cima, baixo, esquerda, direita, 21);
+				}
+			}
+		}
+		
+		Model m2 = ms.getModel(p2.getModel()%ms.getAmount());
+		int w2 = m2.getWidth();
+		int h2 = m2.getHeight();
+		int map2[][] = m2.getMap();
+		
+		for(int j=0; j<h2; j++)
+		{
+			for(int i=0; i<w2; i++)
+			{
+				if(map2[j][i] == 1)
+				{
+					int cima = HEIGHT - (i*Game.MODEL_SIZE + 1);
+					int baixo = cima - (Game.MODEL_SIZE-2);
+					int esquerda = Game.SCREEN_WIDTH/2 + j*Game.MODEL_SIZE + 1 + BORDER_LEFT;
+					int direita = esquerda + (Game.MODEL_SIZE-2);
+					
+					
+					draw_rect(cima, baixo, esquerda, direita, 22);
 				}
 			}
 		}

@@ -2,14 +2,16 @@ package br.unicamp.secomp.hackaton.automatawar;
 
 
 public class Game {	
-	public static boolean RANDOM = false;
+	public static boolean RANDOM = false; // somente para testes!
 	
 	public static int SCREEN_WIDTH = 1500;
 	public static int SCREEN_HEIGHT = 900;
 	
-	public static int BORDER_TOP = 20;
+	public static int BORDER_TOP = 10;
 	
 	public static int TILE_SIZE = 15;
+	
+	public static int MODEL_SIZE = 10;
 	
 	public static int STATES_WIDTH = SCREEN_WIDTH/TILE_SIZE;
 	public static int STATES_HEIGHT = SCREEN_HEIGHT/TILE_SIZE - BORDER_TOP;
