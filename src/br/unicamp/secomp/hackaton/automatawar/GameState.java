@@ -6,6 +6,10 @@ public class GameState {
 	private int[][] states;
 	private int height, width;
 	
+	private int pontos1, pontos2;
+	
+	long startTime;
+	
 	GameState(int y, int x)
 	{
 		this.height = y;
@@ -37,6 +41,7 @@ public class GameState {
 	
 	public void addModel(Player p, Model a)
 	{
+		int count_pixels=0;
 		int map[][] = a.getMap();
 		
 		for(int j = 0; j < a.getHeight(); j++)
@@ -44,9 +49,18 @@ public class GameState {
 			for(int i = 0; i < a.getWidth(); i++)
 			{
 				if(map[j][i] == 1)
+				{
 					states[p.getY() + j][p.getX() + i] = p.getNumber();
+					count_pixels++;
+				}
 			}
 		}
+		
+		if(p.getNumber() == 1)
+			pontos2 += count_pixels*Game.POINTS_PER_MODEL_PIXEL;
+		else if(p.getNumber() == 2)
+			pontos1 += count_pixels*Game.POINTS_PER_MODEL_PIXEL;
+		
 	}
 	
 	public int getState(int y, int x)
@@ -77,7 +91,71 @@ public class GameState {
 			for(i = 0; i < width; i++)
 				states[j][i] = aux[j][i];
 					
-		return;
+		compute_scores();
+	}
+	
+	public void compute_scores()
+	{
+		for(int j=0; j < height; j++)
+		{
+			for(int i=0; i < width/2; i++)
+			{
+				if(states[j][i] != 0 && states[j][i] != 6)
+					pontos2 += Game.POINTS_PER_UNIT_ENEMY_BASE;
+				else if(states[j][i] == 6)
+					pontos1 += Game.POINTS_PER_MY_OSCILATOR;
+			}
+			for(int i=width/2+1; i < width; i++)
+			{
+				if(states[j][i] != 0 && states[j][i] != 6)
+					pontos1 += Game.POINTS_PER_UNIT_ENEMY_BASE;
+				else if(states[j][i] == 6)
+					pontos2 += Game.POINTS_PER_MY_OSCILATOR;
+			}
+		}
+	}
+	
+	public boolean isGG()
+	{
+		int c1=0, c2=0;
+		for(int j=0; j < height; j++)
+		{
+			for(int i=0; i < width/2; i++)
+			{
+				c1++;
+			}
+			for(int i=width/2+1; i < width; i++)
+			{
+				c2++;
+			}
+		}
+		if(c1 == 0 || c2 == 0)
+			return true;
+		
+		if(getTimeleft() <= 0)
+			return true;
+		
+		return false;
+	}
+	
+	public void start()
+	{
+		startTime = System.currentTimeMillis();
+	}
+	
+	public long getTimeleft()
+	{
+		return (Game.GAME_TIME - (System.currentTimeMillis() - startTime)/1000);
+	}
+	
+	public int getPontos1()
+	{
+		return pontos1;
+	}
+	
+	public int getPontos2()
+	{
+		return pontos2;
 	}
 	
 	public int getAmount(int elem, int src_x, int src_y) {
@@ -110,7 +188,8 @@ public class GameState {
 		int amount_1 = getAmount(1, x, y);
 		int amount_2 = getAmount(2, x, y);
 		int amount_3 = getAmount(3, x, y);
-		int amount_t = amount_1 + amount_2 + amount_3;
+		int amount_6 = getAmount(6, x, y);
+		int amount_t = amount_1 + amount_2 + amount_3 + amount_6;
 		
 		if (currstate == 0)
 		{
@@ -120,11 +199,13 @@ public class GameState {
 					return 1;
 				else if (amount_2 == amount_t) //Apenas vermelhos
 					return 2;
+				else if (amount_6 == amount_t)
+					return 6;
 				return 3; //IT BEGINS
 			}
 			return 0;
 		}
-		if ((currstate == 1) || (currstate == 2) || (currstate == 3))
+		if ((currstate == 1) || (currstate == 2) || (currstate == 3) || (currstate == 6))
 		{
 			if ((amount_t != 2) && (amount_t != 3))
 				return 0;

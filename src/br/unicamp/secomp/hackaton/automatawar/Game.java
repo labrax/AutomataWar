@@ -5,14 +5,14 @@ public class Game {
 	public static boolean RANDOM = false; // somente para testes!
 	public static boolean COMPUTE = true;
 	
-	public static int SCREEN_WIDTH = 1500;
+	public static int SCREEN_WIDTH = 1500; //1050
 	public static int SCREEN_HEIGHT = 900;
 	
 	public static int BORDER_TOP = 10;
 	
-	public static int TILE_SIZE = 15;
+	public static int TILE_SIZE = 10; //15
 	
-	public static int MODEL_SIZE = 10;
+	public static int MODEL_SIZE = 5;
 	
 	public static int STATES_WIDTH = SCREEN_WIDTH/TILE_SIZE;
 	public static int STATES_HEIGHT = SCREEN_HEIGHT/TILE_SIZE - BORDER_TOP;
@@ -21,6 +21,12 @@ public class Game {
 	
 	public static int UPDATES_PER_SECOND = 10;
 	public static int MOVEMENT_PER_SECOND = 10;
+	
+	public static int POINTS_PER_MODEL_PIXEL = 3; //fator de multiplicação de pontos
+	public static int POINTS_PER_UNIT_ENEMY_BASE = 1;
+	public static int POINTS_PER_MY_OSCILATOR = 5;
+	
+	public static long GAME_TIME = 100;
 	
 	public static void main(String args[])
 	{

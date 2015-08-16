@@ -18,6 +18,8 @@ public class Screen {
 	
 	ModelSelection ms;
 	
+	Numbers numbers;
+	
 	public Screen(int y, int x, GameState gs, Controllers c, Player p1, Player p2, ModelSelection ms)
 	{
 		this.gs = gs;
@@ -25,6 +27,7 @@ public class Screen {
 		this.p1 = p1;
 		this.p2 = p2;
 		this.ms = ms;
+		this.numbers = new Numbers();
 		
 		System.out.println("Hello LWJGL " + Sys.getVersion() + "!");
 		HEIGHT = y;
@@ -37,6 +40,7 @@ public class Screen {
 	
 	public void addBase()
 	{
+		Player p3 = new Player(6);
 		int v8[][] =
 			{
 				{0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0},
@@ -57,16 +61,17 @@ public class Screen {
 			};
 		Model m = new Model("Base", v8, 15, 15);
 		
-		p1.set_sel(0, Game.STATES_HEIGHT/2 - 15);
-		gs.addModel(p1, m);
+		p3.set_sel(0, Game.STATES_HEIGHT/2 - 15);
+		gs.addModel(p3, m);
 		
-		p2.set_sel(Game.STATES_WIDTH-m.getWidth(), Game.STATES_HEIGHT/2);
-		gs.addModel(p2, m);
+		p3.set_sel(Game.STATES_WIDTH-m.getWidth(), Game.STATES_HEIGHT/2);
+		gs.addModel(p3, m);
 	}
 	
 	public void run()
 	{
 		long currTime, lastTime=0;
+		gs.start();
 		while(!Display.isCloseRequested())
 		{
 			glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
@@ -77,7 +82,7 @@ public class Screen {
 			if(currTime >= lastTime + 1000/Game.UPDATES_PER_SECOND)
 			{
 				if(Game.COMPUTE)
-				gs.compute();
+					gs.compute(); //calcula novo estado e pontos
 				lastTime = currTime;
 			}
 			//-------------------
@@ -112,7 +117,7 @@ public class Screen {
 			if(p2.getAcao() == 1)
 			{
 				Model n = ms.getModel(p2.getModel()%ms.getAmount());
-				if(p2.getX() >= (Game.STATES_WIDTH/2 + Game.BARRIER/Game.TILE_SIZE))
+				if((p2.getX() >= (Game.STATES_WIDTH/2 + Game.BARRIER/Game.TILE_SIZE)) && (p2.getX() + n.getWidth() < Game.STATES_WIDTH))
 				{
 					if(p2.getY() + n.getHeight() <= Game.STATES_HEIGHT)
 					{
@@ -152,7 +157,6 @@ public class Screen {
 	    {
 	        e.printStackTrace();
 	    }
-	     
 	}
 	 
 	private void initOGL() {
@@ -209,6 +213,7 @@ public class Screen {
 			}
 		}
 		
+		//--- draw new models
 		Model m = ms.getModel(p1.getModel()%ms.getAmount());
 		int w = m.getWidth();
 		int h = m.getHeight();
@@ -246,11 +251,22 @@ public class Screen {
 					int esquerda = Game.SCREEN_WIDTH/2 + i*Game.MODEL_SIZE + 1 + BORDER_LEFT;
 					int direita = esquerda + (Game.MODEL_SIZE-2);
 					
-					
 					draw_rect(cima, baixo, esquerda, direita, 22);
 				}
 			}
 		}
+		//---
+		
+		//--- draw time limit
+		long timeleft = gs.getTimeleft();
+		if(timeleft%100 > 0)
+		{
+			
+		}
+		//
+		
+		//--- draw points
+		
 	}
 	
 	public void draw_rect(int y1, int y2, int x1, int x2, int cor)
@@ -265,6 +281,8 @@ public class Screen {
 			GL11.glColor3f(0.07f, 0.07f, 0.07f);
 		else if(cor == 5) //terra neutra
 			GL11.glColor3f(0.5f, 0.5f, 0.5f);
+		else if(cor == 6)//amarelo - oscilador
+			GL11.glColor3f(0.6f, 1.0f, 0.0f);
 		else if(cor == 21)
 		{
 			if(p1_color==0)
