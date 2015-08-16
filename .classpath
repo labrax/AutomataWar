@@ -20,5 +20,6 @@
 	<classpathentry kind="lib" path="C:/Users/Victor/workspace/AutomataWar/lib/lwjgl2/lzma.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Victor/workspace/AutomataWar/lib/lwjgl2/substance-7.2.1.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Victor/workspace/AutomataWar/lib/lwjgl2/trident-7.2.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Victor/workspace/AutomataWar/lib/slick.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -3,8 +3,12 @@ package br.unicamp.secomp.hackaton.automatawar;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.Sys;
 import org.lwjgl.opengl.*;
+import org.lwjgl.util.Color;
 
 import static org.lwjgl.opengl.GL11.*;
+
+import java.awt.Font;
+import org.newdawn.slick.UnicodeFont;
 
 public class Screen {
 	int p1_color = 0;
@@ -15,6 +19,8 @@ public class Screen {
 	private GameState gs;
 	private Controllers c;
 	private Player p1, p2;
+	
+	UnicodeFont uf;
 	
 	public Screen(int y, int x, GameState gs, Controllers c, Player p1, Player p2)
 	{
@@ -27,8 +33,11 @@ public class Screen {
 		HEIGHT = y;
 		WIDTH = x;
 		
-		init();
+		Font awtFont = new Font("Times New Roman", Font.BOLD, 12);
+		uf = new UnicodeFont(awtFont, 0, false, false);
+
 		
+		init();
 	}
 		
 	public void run()
@@ -88,11 +97,15 @@ public class Screen {
 	{
 		//System.out.println("Drawing");
 		
-        int BORDER_TOP = 50;
+        int BORDER_TOP = 100;
         int BORDER_LEFT = 0;
         
-		draw_rect(0+BORDER_TOP, HEIGHT-BORDER_TOP, 0+BORDER_LEFT, WIDTH-BORDER_LEFT, 4);
+		draw_rect(0, HEIGHT-BORDER_TOP, 0+BORDER_LEFT, WIDTH-BORDER_LEFT, 4); //desenha fundo preto
+		
+		draw_rect(0, HEIGHT-BORDER_TOP, Game.SCREEN_WIDTH/2-Game.BARRIER, Game.SCREEN_WIDTH/2+Game.BARRIER, 5); //desenha zona sem contato
         
+		uf.drawString(0.1f, 0.1f, "THE LIGHTWEIGHT JAVA GAMES LIBRARY");
+		
 		int gs_w = gs.getWidth();
 		int gs_h = gs.getHeight();
 		
@@ -110,7 +123,7 @@ public class Screen {
 				int cima = HEIGHT - (i*5 + 1 + BORDER_TOP);
 				int baixo = cima - 3;
 				int esquerda = j*5 + 1 + BORDER_LEFT;
-				int direita = esquerda - 3;
+				int direita = esquerda + 3;
 				
 				if(p1.getY() == i && p1.getX() == j)
 				{
@@ -130,28 +143,30 @@ public class Screen {
 	
 	public void draw_rect(int y1, int y2, int x1, int x2, int cor)
 	{
-		if(cor == 1)
+		if(cor == 1) //p1
 			GL11.glColor3f(0.0f, 0.0f, 1.0f);
-		else if(cor == 2)
+		else if(cor == 2) //p2
 			GL11.glColor3f(1.0f, 0f, 0.0f);
-		else if(cor == 3)
-			GL11.glColor3f(0.6f, 0.2f, 0.5f);
-		else if(cor == 4)
-			GL11.glColor3f(0.0f, 0.0f, 0.0f);
+		else if(cor == 3) //neutro
+			GL11.glColor3f(1.0f, 0.647f, 0.5f);
+		else if(cor == 4) //fundo
+			GL11.glColor3f(0.07f, 0.07f, 0.07f);
+		else if(cor == 5) //terra neutra
+			GL11.glColor3f(0.5f, 0.5f, 0.5f);
 		else if(cor == 21)
 		{
 			if(p1_color==0)
-				GL11.glColor3f(0.1f, 0.1f, 1.0f);
+				GL11.glColor3f(0.2f, 0.5f, 1.0f);
 			else
-				GL11.glColor3f(0.1f, 0.1f, 0.9f);
+				GL11.glColor3f(0.2f, 0.5f, 0.8f);
 			p1_color = p1_color+1%5;
 		}
 		else if(cor == 22)
 		{
 			if(p2_color==0)
-				GL11.glColor3f(1.0f, 0.1f, 1.0f);
+				GL11.glColor3f(1.0f, 0.5f, 0.2f);
 			else
-				GL11.glColor3f(0.9f, 0.1f, 0.1f);
+				GL11.glColor3f(0.8f, 0.5f, 0.2f);
 			p2_color = p2_color+1%5;
 		}
 		else
