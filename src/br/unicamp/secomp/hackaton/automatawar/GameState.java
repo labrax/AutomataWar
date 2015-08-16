@@ -1,6 +1,6 @@
 package br.unicamp.secomp.hackaton.automatawar;
 
-//import java.util.Random;
+import java.util.Random;
 
 public class GameState {
 	private int[][] states;
@@ -12,25 +12,28 @@ public class GameState {
 		this.width = x;
 		states = new int[height][width];
 		
-	    /*Random rand = new Random(); 
-	    rand.setSeed(System.currentTimeMillis()); 
-	    for (int i = 0; i < y; i++)
-	    {     
-		    for (int j = 0; j < x; j++)
-		    {
-		        Integer r = rand.nextInt()%3; 
-		        states[i][j] = Math.abs(r);
-		    }
+		if(Game.RANDOM)
+		{
+		    Random rand = new Random(); 
+		    rand.setSeed(System.currentTimeMillis()); 
+		    for (int i = 0; i < y; i++)
+		    {     
+			    for (int j = 0; j < x; j++)
+			    {
+			        Integer r = rand.nextInt()%3; 
+			        states[i][j] = Math.abs(r);
+			    }
+			}
+		    
+		    for(int i=0; i < y; i++)
+		    	for(int j=0; j < x; j++)
+		    	{
+		    		System.out.print(states[i][j]);
+		    		if(j == x-1)
+		    			System.out.println();
+		    	}
 		}
 	    
-	    for(int i=0; i < y; i++)
-	    	for(int j=0; j < x; j++)
-	    	{
-	    		System.out.print(states[i][j]);
-	    		if(j == x-1)
-	    			System.out.println();
-	    	}
-	    */
 	}
 	
 	public int getState(int y, int x)

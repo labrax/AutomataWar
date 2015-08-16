@@ -32,7 +32,7 @@ public class Screen {
 		
 	public void run()
 	{
-		long currTime, lastTime=0;
+		long currTime, lastTime=0, lastKeyTime = 0;
 		while(!Display.isCloseRequested())
 		{
 			glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
@@ -44,6 +44,15 @@ public class Screen {
 				gs.compute();
 				lastTime = currTime;
 			}
+			
+			if(currTime <= lastKeyTime + 1000/5)
+			{
+				p1.movimento_acumulado();
+				p2.movimento_acumulado();
+			}
+			
+			lastKeyTime = currTime;
+			
 			
 		    GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
 		    draw();
@@ -87,7 +96,7 @@ public class Screen {
 	{
 		//System.out.println("Drawing");
 		
-        int BORDER_TOP = 100;
+        int BORDER_TOP = Game.BORDER_TOP * Game.TILE_SIZE;
         int BORDER_LEFT = 0;
         
 		draw_rect(0, HEIGHT-BORDER_TOP, 0+BORDER_LEFT, WIDTH-BORDER_LEFT, 4); //desenha fundo preto
@@ -108,10 +117,10 @@ public class Screen {
 				if(j == gs_w-1)
 					System.out.println();*/
 				
-				int cima = HEIGHT - (i*5 + 1 + BORDER_TOP);
-				int baixo = cima - 3;
-				int esquerda = j*5 + 1 + BORDER_LEFT;
-				int direita = esquerda + 3;
+				int cima = HEIGHT - (i*Game.TILE_SIZE + 1 + BORDER_TOP);
+				int baixo = cima - (Game.TILE_SIZE-2);
+				int esquerda = j*Game.TILE_SIZE + 1 + BORDER_LEFT;
+				int direita = esquerda + (Game.TILE_SIZE-2);
 				
 				if(p1.getY() == i && p1.getX() == j)
 				{
@@ -146,16 +155,17 @@ public class Screen {
 			if(p1_color==0)
 				GL11.glColor3f(0.2f, 0.5f, 1.0f);
 			else
-				GL11.glColor3f(0.2f, 0.5f, 0.8f);
-			p1_color = p1_color+1%5;
+				GL11.glColor3f(0.2f, 0.4f, 0.8f);
+			
+			p1_color = (p1_color+1)%5;
 		}
 		else if(cor == 22)
 		{
 			if(p2_color==0)
 				GL11.glColor3f(1.0f, 0.5f, 0.2f);
 			else
-				GL11.glColor3f(0.8f, 0.5f, 0.2f);
-			p2_color = p2_color+1%5;
+				GL11.glColor3f(0.8f, 0.4f, 0.2f);
+			p2_color = (p2_color+1)%5;
 		}
 		else
 			GL11.glColor3f(1.0f, 1.0f, 1.0f);

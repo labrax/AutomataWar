@@ -1,14 +1,20 @@
 package br.unicamp.secomp.hackaton.automatawar;
 
 
-public class Game {
-	public static int STATES_WIDTH = 280;
-	public static int STATES_HEIGHT = 140;
+public class Game {	
+	public static boolean RANDOM = false;
 	
-	public static int SCREEN_WIDTH = 1400;
-	public static int SCREEN_HEIGHT = 800;
+	public static int SCREEN_WIDTH = 1500;
+	public static int SCREEN_HEIGHT = 900;
 	
-	public static int BARRIER = 25; //barreira a cada lado no meio
+	public static int BORDER_TOP = 20;
+	
+	public static int TILE_SIZE = 15;
+	
+	public static int STATES_WIDTH = SCREEN_WIDTH/TILE_SIZE;
+	public static int STATES_HEIGHT = SCREEN_HEIGHT/TILE_SIZE - BORDER_TOP;
+	
+	public static int BARRIER = TILE_SIZE*5; //barreira a cada lado no meio
 	
 	public static int UPDATES_PER_SECOND = 1;
 	
@@ -19,8 +25,8 @@ public class Game {
 		GameState gs = new GameState(STATES_HEIGHT, STATES_WIDTH);
 		Screen screen = new Screen(SCREEN_HEIGHT, SCREEN_WIDTH, gs, c, p1, p2);
 		
-		p1.set_sel(105, 70);
-		p2.set_sel(175, 70);
+		p1.set_sel(STATES_WIDTH/2-1, STATES_HEIGHT/2);
+		p2.set_sel(STATES_WIDTH/2+1, STATES_HEIGHT/2);
 		
 		screen.run(); //game!
 	}

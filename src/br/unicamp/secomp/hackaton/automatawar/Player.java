@@ -9,6 +9,9 @@ public class Player {
 	
 	private int player_number; //1 or 2
 	
+	private int vertical = 0;
+	private int horizontal = 0;
+	
 	public Player(int p)
 	{
 		op = 0;
@@ -35,24 +38,66 @@ public class Player {
 		return sel_y;
 	}
 	
-	public void up()
+	public void up(boolean down)
 	{
-		this.set_sel(this.getX(), this.getY()-2);
+		if(down)
+		{
+			System.out.println("Player " + player_number + ": is down!");
+			this.set_sel(this.getX(), this.getY()-1);
+			vertical=-1;
+		}
+		else
+		{
+			System.out.println("Player " + player_number + ": is up!");
+			vertical=0;
+		}
 	}
 	
-	public void down()
+	public void down(boolean down)
 	{
-		this.set_sel(this.getX(), this.getY()+2);
+		if(down)
+		{
+			this.set_sel(this.getX(), this.getY()+1);
+			vertical=+1;
+		}
+		else
+			vertical=0;
 	}
 	
-	public void left()
+	public void left(boolean down)
 	{
-		this.set_sel(this.getX()-2, this.getY());
+		if(down)
+		{
+			this.set_sel(this.getX()-1, this.getY());
+			horizontal=-1;
+		}
+		else
+		{
+			horizontal = 0;
+		}
 	}
 	
-	public void right()
+	public void right(boolean down)
 	{
-		this.set_sel(this.getX()+2, this.getY());
+		if(down)
+		{
+			this.set_sel(this.getX()+1, this.getY());
+			horizontal=+1;
+		}
+		else
+			horizontal=0;
+	}
+	
+	public void movimento_acumulado()
+	{
+		if(horizontal!=0)
+		{
+			this.set_sel(this.getX()+horizontal, this.getY());
+		}
+		if(vertical!=0)
+		{
+			this.set_sel(this.getX(), this.getY()+vertical);
+		}
 	}
 	
 	public void act()
