@@ -87,22 +87,24 @@ public class ModelSelection {
 			{
 				{0 ,0 ,0 ,0 ,0},
 				{0 ,0 ,1 ,0 ,0},
-				{0 ,0 ,0 ,1 ,0},
+				{0 ,1 ,0 ,0 ,0},
 				{0 ,1 ,1 ,1 ,0},
 				{0 ,0 ,0 ,0 ,0}
 			};
-		m = new Model("Glider Sudeste", v6, 5, 5);
+		m = new Model("Glider Sudoeste", v6, 5, 5);
 		addModel(m);
 		
 		int v7[][] =
 			{
 				{0 ,0 ,0 ,0 ,0},
 				{0 ,0 ,1 ,0 ,0},
-				{0 ,1 ,0 ,0 ,0},
+				{0 ,0 ,0 ,1 ,0},
 				{0 ,1 ,1 ,1 ,0},
 				{0 ,0 ,0 ,0 ,0}
 			};
-		m = new Model("Glider Sudoeste", v7, 5, 5);
+		m = new Model("Glider Sudeste", v7, 5, 5);
 		addModel(m);
+		
+
 	}
 }

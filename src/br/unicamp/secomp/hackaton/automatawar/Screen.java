@@ -45,7 +45,7 @@ public class Screen {
 			currTime = System.currentTimeMillis();
 			if(currTime >= lastTime + 1000/Game.UPDATES_PER_SECOND)
 			{
-				gs.compute();
+				//gs.compute();
 				lastTime = currTime;
 			}
 			//-------------------
