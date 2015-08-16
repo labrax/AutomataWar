@@ -6,7 +6,6 @@ public class Player {
 	
 	long time;
 	
-	private int mode_weapon = 0;
 	private int selected_model = 0;
 	
 	private int player_number; //1 or 2
