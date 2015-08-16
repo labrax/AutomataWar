@@ -7,10 +7,11 @@ public class GameState {
 	private int height, width;
 	
 	private int pontos1, pontos2;
+	private int pontos1_acumulado=0, pontos2_acumulado=0;
 	
 	long startTime;
 	
-	private boolean gg = false;
+	private boolean gg = false, time = false;
 	long last_time = 0;
 	
 	GameState(int y, int x)
@@ -60,9 +61,15 @@ public class GameState {
 		}
 		
 		if(p.getNumber() == 1)
-			pontos2 += count_pixels*Game.POINTS_PER_MODEL_PIXEL;
+		{
+			pontos2_acumulado += count_pixels*Game.POINTS_PER_MODEL_PIXEL;
+			System.out.println("Player 1 added a " + a.getName() + "! Player 2 awarded " + count_pixels*Game.POINTS_PER_MODEL_PIXEL);
+		}
 		else if(p.getNumber() == 2)
-			pontos1 += count_pixels*Game.POINTS_PER_MODEL_PIXEL;
+		{
+			pontos1_acumulado += count_pixels*Game.POINTS_PER_MODEL_PIXEL;
+			System.out.println("Player 2 added a " + a.getName() + "! Player 1 awarded " + count_pixels*Game.POINTS_PER_MODEL_PIXEL);
+		}
 		
 	}
 	
@@ -146,10 +153,16 @@ public class GameState {
 		if(getTimeleft() <= 0)
 		{
 			gg = true;
+			time = true;
 			return true;
 		}
 		
 		return false;
+	}
+	
+	public boolean isGGtime()
+	{
+		return time;
 	}
 	
 	public void start()
@@ -166,12 +179,12 @@ public class GameState {
 	
 	public int getPontos1()
 	{
-		return pontos1;
+		return pontos1+pontos1_acumulado;
 	}
 	
 	public int getPontos2()
 	{
-		return pontos2;
+		return pontos2+pontos2_acumulado;
 	}
 	
 	public int getAmount(int elem, int src_x, int src_y) {

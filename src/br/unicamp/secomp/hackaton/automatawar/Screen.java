@@ -94,6 +94,11 @@ public class Screen {
 					if(gs.isGG())
 					{
 						gg = true;
+						
+						if(gs.isGGtime())
+							Sound.playSoundTimeLimit();
+						else
+							Sound.playSoundAcabou();
 						System.out.println("GG!");
 					}
 				}
@@ -116,7 +121,7 @@ public class Screen {
 				//------------------- adiciona modelos
 				if(p1.getAcao() == 1)
 				{
-					Model n = ms.getModel(p1.getModel()%ms.getAmount());
+					Model n = ms.getModel(1, p1.getModel()%ms.getAmount(1));
 					if((p1.getX() + n.getWidth() <= (Game.STATES_WIDTH/2 - Game.BARRIER/Game.TILE_SIZE + 1)) || Game.ITS_A_PUTARIA)
 					{
 						if(p1.getY() + n.getHeight() <= Game.STATES_HEIGHT)
@@ -128,7 +133,7 @@ public class Screen {
 				}
 				if(p2.getAcao() == 1)
 				{
-					Model n = ms.getModel(p2.getModel()%ms.getAmount());
+					Model n = ms.getModel(2, p2.getModel()%ms.getAmount(2));
 					if( ((p2.getX() >= (Game.STATES_WIDTH/2 + Game.BARRIER/Game.TILE_SIZE)) || Game.ITS_A_PUTARIA ) && (p2.getX() + n.getWidth() < Game.STATES_WIDTH))
 					{
 						if(p2.getY() + n.getHeight() <= Game.STATES_HEIGHT)
@@ -248,7 +253,7 @@ public class Screen {
 		}
 		
 		//--- draw new models
-		Model m = ms.getModel(p1.getModel()%ms.getAmount());
+		Model m = ms.getModel(1, p1.getModel()%ms.getAmount(1));
 		int w = m.getWidth();
 		int h = m.getHeight();
 		int map[][] = m.getMap();
@@ -269,7 +274,7 @@ public class Screen {
 			}
 		}
 		
-		Model m2 = ms.getModel(p2.getModel()%ms.getAmount());
+		Model m2 = ms.getModel(2, p2.getModel()%ms.getAmount(2));
 		int w2 = m2.getWidth();
 		int h2 = m2.getHeight();
 		int map2[][] = m2.getMap();

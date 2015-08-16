@@ -20,7 +20,7 @@ public class Game {
 	public static int BARRIER = TILE_SIZE*5; //barreira a cada lado no meio
 	
 	public static int UPDATES_PER_SECOND = 10;
-	public static int MOVEMENT_PER_SECOND = 10;
+	public static int MOVEMENT_PER_SECOND = 15;
 	
 	public static int POINTS_PER_MODEL_PIXEL = 10; //fator de multiplicação de pontos
 	public static int POINTS_PER_UNIT_ENEMY_BASE = 3;

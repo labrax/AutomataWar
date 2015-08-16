@@ -10,8 +10,8 @@ public class Controllers {
 	public static final int left1 = Keyboard.KEY_A;
 	public static final int right1 = Keyboard.KEY_D;
 	
-	public static final int act1 = Keyboard.KEY_Q;
-	public static final int select1 = Keyboard.KEY_E;
+	public static final int act1 = Keyboard.KEY_SPACE;
+	public static final int select1 = Keyboard.KEY_TAB;
 	
 	public static final int up2 = Keyboard.KEY_UP;
 	public static final int down2 = Keyboard.KEY_DOWN;
