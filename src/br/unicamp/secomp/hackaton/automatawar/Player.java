@@ -52,17 +52,17 @@ public class Player {
 	
 	public void up(boolean down)
 	{
-		System.out.println(vertical);
+		//System.out.println(vertical);
 		if(down)
 		{
-			System.out.println("Player " + player_number + ": is down!");
+			//System.out.println("Player " + player_number + ": is down!");
 			this.set_sel(this.getX(), this.getY()-1);
 			vertical=-1;
 			time = System.currentTimeMillis();
 		}
 		else
 		{
-			System.out.println("Player " + player_number + ": is up!");
+			//System.out.println("Player " + player_number + ": is up!");
 			vertical=0;
 		}
 	}

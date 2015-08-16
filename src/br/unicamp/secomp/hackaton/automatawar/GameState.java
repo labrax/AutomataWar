@@ -37,8 +37,6 @@ public class GameState {
 	
 	public void addModel(Player p, Model a)
 	{
-		System.out.println("" + a.getHeight() + "," + a.getWidth());
-		
 		int map[][] = a.getMap();
 		
 		for(int j = 0; j < a.getHeight(); j++)

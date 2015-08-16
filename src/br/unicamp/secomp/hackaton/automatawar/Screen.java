@@ -67,31 +67,25 @@ public class Screen {
 			//------------------- adiciona modelos
 			if(p1.getAcao() == 1)
 			{
-				if(p1.getX() < (Game.STATES_WIDTH - Game.BARRIER/Game.TILE_SIZE))
+				Model n = ms.getModel(p1.getModel());
+				if(p1.getX() + n.getWidth() <= (Game.STATES_WIDTH/2 - Game.BARRIER/Game.TILE_SIZE + 1))
 				{
-					Model n = ms.getModel(p1.getModel());
-					if(p1.getX() + n.getWidth() < Game.STATES_WIDTH)
+					if(p1.getY() + n.getHeight() <= Game.STATES_HEIGHT)
 					{
-						if(p1.getY() + n.getHeight() < Game.STATES_HEIGHT)
-						{
-							System.out.println("Inserting for p1");
-							gs.addModel(p1, n);
-						}
+						System.out.println("Inserting for p1");
+						gs.addModel(p1, n);
 					}
 				}
 			}
 			if(p2.getAcao() == 1)
 			{
-				if(p2.getX() < (Game.STATES_WIDTH - Game.BARRIER/Game.TILE_SIZE))
+				Model n = ms.getModel(p2.getModel());
+				if(p2.getX() >= (Game.STATES_WIDTH/2 + Game.BARRIER/Game.TILE_SIZE))
 				{
-					Model n = ms.getModel(p2.getModel());
-					if(p2.getX() + n.getWidth() < Game.STATES_WIDTH)
+					if(p2.getY() + n.getHeight() <= Game.STATES_HEIGHT)
 					{
-						if(p2.getY() + n.getHeight() < Game.STATES_HEIGHT)
-						{
-							System.out.println("Inserting for p2");
-							gs.addModel(p2, n);
-						}
+						System.out.println("Inserting for p2");
+						gs.addModel(p2, n);
 					}
 				}
 			}
