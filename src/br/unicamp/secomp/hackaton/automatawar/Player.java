@@ -25,7 +25,7 @@ public class Player {
 		if(y >= 0 && y < Game.STATES_HEIGHT)
 			sel_y = y;
 		
-		System.out.println("Player " + player_number + " at: " + sel_x + "," + sel_y);
+		//System.out.println("Player " + player_number + " at: " + sel_x + "," + sel_y);
 	}
 	
 	public int getX()
@@ -42,13 +42,13 @@ public class Player {
 	{
 		if(down)
 		{
-			System.out.println("Player " + player_number + ": is down!");
+			//System.out.println("Player " + player_number + ": is down!");
 			this.set_sel(this.getX(), this.getY()-1);
 			vertical=-1;
 		}
 		else
 		{
-			System.out.println("Player " + player_number + ": is up!");
+			//System.out.println("Player " + player_number + ": is up!");
 			vertical=0;
 		}
 	}
@@ -114,6 +114,8 @@ public class Player {
 	
 	public int getAcao()
 	{
-		return op;
+		int ret = op;
+		op = 0;
+		return ret;
 	}
 }

@@ -51,6 +51,19 @@ public class Screen {
 				p2.movimento_acumulado();
 			}
 			
+			if(p1.getAcao() == 1)
+			{
+				if(p1.getX() < (Game.STATES_WIDTH-Game.BARRIER/Game.TILE_SIZE))
+					;
+					//adicionar elemento!
+			}
+			if(p2.getAcao() == 1)
+			{
+				if(p2.getX() < (Game.STATES_WIDTH-Game.BARRIER/Game.TILE_SIZE))
+					;
+					//adicionar elemento!
+			}
+			
 			lastKeyTime = currTime;
 			
 			
