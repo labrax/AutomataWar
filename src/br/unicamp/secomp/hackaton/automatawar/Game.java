@@ -10,7 +10,7 @@ public class Game {
 	
 	public static int BORDER_TOP = 10;
 	
-	public static int TILE_SIZE = 10; //15
+	public static int TILE_SIZE = 15; //15
 	
 	public static int MODEL_SIZE = 5;
 	

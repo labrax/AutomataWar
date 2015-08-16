@@ -23,6 +23,8 @@ public class Screen {
 	
 	private boolean gg = false;
 	
+	int high1=500, high2=500;
+	
 	public Screen(int y, int x, GameState gs, Controllers c, Player p1, Player p2, ModelSelection ms)
 	{
 		this.gs = gs;
@@ -128,6 +130,7 @@ public class Screen {
 						{
 							//System.out.println("Inserting for p1");
 							gs.addModel(p1, n);
+							Sound.playSoundPlacement();
 						}
 					}
 				}
@@ -140,6 +143,7 @@ public class Screen {
 						{
 							//System.out.println("Inserting for p2");
 							gs.addModel(p2, n);
+							Sound.playSoundPlacement();
 						}
 					}
 				}
@@ -300,8 +304,20 @@ public class Screen {
 		draw_number((int) gs.getTimeleft(), HEIGHT-Game.POINTS_SIZE*5, Game.SCREEN_WIDTH/2 - Game.POINTS_SIZE*5/2, Game.POINTS_SIZE, 4, true);
 		
 		//--- draw points
-		draw_number(gs.getPontos1(), HEIGHT-Game.POINTS_SIZE*5, Game.SCREEN_WIDTH/4 - Game.POINTS_SIZE*5/2, Game.POINTS_SIZE, 1, false);
-		draw_number(gs.getPontos2(), HEIGHT-Game.POINTS_SIZE*5, Game.SCREEN_WIDTH*3/4 - Game.POINTS_SIZE*5/2, Game.POINTS_SIZE, 2, false);
+		int pontos1 = gs.getPontos1();
+		if(pontos1 > high1 + 500)
+		{
+			high1 = pontos1;
+			Sound.playSoundPontos();
+		}
+		int pontos2 = gs.getPontos2();
+		if(pontos2 > high2 + 500)
+		{
+			high2 = pontos2;
+			Sound.playSoundPontos();
+		}
+		draw_number(pontos1, HEIGHT-Game.POINTS_SIZE*5, Game.SCREEN_WIDTH/4 - Game.POINTS_SIZE*5/2, Game.POINTS_SIZE, 1, false);
+		draw_number(pontos2, HEIGHT-Game.POINTS_SIZE*5, Game.SCREEN_WIDTH*3/4 - Game.POINTS_SIZE*5/2, Game.POINTS_SIZE, 2, false);
 		//---
 		
 		if(gg)
