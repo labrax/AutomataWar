@@ -31,6 +31,11 @@ public class Game {
 	
 	public static boolean ITS_A_PUTARIA = false; //CHEAT MODE!
 	
+	public static boolean SHIELD = false;
+	public static boolean MAY_GLIDER = true;
+	public static boolean FACTORY = false;
+	public static boolean SPACESHIP = true;
+	
 	public static void main(String args[])
 	{
 		boolean cont = false;

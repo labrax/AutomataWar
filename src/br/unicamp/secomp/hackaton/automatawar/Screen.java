@@ -81,12 +81,33 @@ public class Screen {
 				{1, 0, 1, 0, 0, 1},
 				{1, 1, 0, 0, 1, 1}
 			};
-		m = new Model("Oscilador 2", v9, 6, 6);
+		m = new Model("Relógio", v9, 6, 6);
 		p3.set_sel(m.getWidth()+4, Game.STATES_HEIGHT/2 + 10);
 		gs.addModel(p3, m);
 		
 		p3.set_sel(Game.STATES_WIDTH-m.getWidth()-10, Game.STATES_HEIGHT/2-10-m.getHeight());
 		gs.addModel(p3, m);
+		
+		int v10[][] =
+			{
+					{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, 
+					{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, 
+					{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, 
+					{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, 
+					{0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0}, 
+					{0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 0, 1, 0, 0, 0, 0, 0}, 
+					{0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0}, 
+					{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, 
+					{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, 
+					{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, 
+					{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+			};
+		m = new Model("Oscilador 2", v10, 11, 17);
+		p3.set_sel(Game.STATES_WIDTH/2-m.getWidth()/2-1, 0);
+		gs.addModel(p3, m);
+		
+		p3.set_sel(Game.STATES_WIDTH/2-m.getWidth()/2-1, Game.STATES_HEIGHT-m.getHeight());
+		gs.addModel(p3, m);		
 	}
 	
 	public boolean run()
