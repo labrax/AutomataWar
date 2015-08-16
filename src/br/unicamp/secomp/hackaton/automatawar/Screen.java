@@ -2,6 +2,7 @@ package br.unicamp.secomp.hackaton.automatawar;
 
 import org.lwjgl.LWJGLException;
 import org.lwjgl.Sys;
+import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.*;
 
 import static org.lwjgl.opengl.GL11.*;
@@ -19,6 +20,8 @@ public class Screen {
 	ModelSelection ms;
 	
 	Numbers numbers;
+	
+	private boolean gg = false;
 	
 	public Screen(int y, int x, GameState gs, Controllers c, Player p1, Player p2, ModelSelection ms)
 	{
@@ -68,77 +71,105 @@ public class Screen {
 		gs.addModel(p3, m);
 	}
 	
-	public void run()
+	public boolean run()
 	{
+		boolean end = false, cont = false;
 		long currTime, lastTime=0;
 		gs.start();
 		while(!Display.isCloseRequested())
 		{
 			glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
-			c.handle();
-			
-			//------------------- atualiza jogo
-			currTime = System.currentTimeMillis();
-			if(currTime >= lastTime + 1000/Game.UPDATES_PER_SECOND)
+			if(gg == false)
 			{
-				if(Game.COMPUTE)
-					gs.compute(); //calcula novo estado e pontos
-				lastTime = currTime;
-			}
-			//-------------------
-			
-			//------------------- movimento jogador
-			currTime = System.currentTimeMillis();
-			if(currTime >= p1.getTime() + 1000/Game.MOVEMENT_PER_SECOND)
-			{
-				p1.movimento_acumulado();
-				p1.updateTime();
-			}
-			if(currTime >= p2.getTime() + 1000/Game.MOVEMENT_PER_SECOND)
-			{
-				p2.movimento_acumulado();
-				p2.updateTime();
-			}
-			//-------------------
-			
-			//------------------- adiciona modelos
-			if(p1.getAcao() == 1)
-			{
-				Model n = ms.getModel(p1.getModel()%ms.getAmount());
-				if(p1.getX() + n.getWidth() <= (Game.STATES_WIDTH/2 - Game.BARRIER/Game.TILE_SIZE + 1))
+				c.handle();
+				
+				//------------------- atualiza jogo
+				currTime = System.currentTimeMillis();
+				if(currTime >= lastTime + 1000/Game.UPDATES_PER_SECOND)
 				{
-					if(p1.getY() + n.getHeight() <= Game.STATES_HEIGHT)
+					if(Game.COMPUTE)
+						gs.compute(); //calcula novo estado e pontos
+					lastTime = currTime;
+					
+					if(gs.isGG())
 					{
-						System.out.println("Inserting for p1");
-						gs.addModel(p1, n);
+						gg = true;
+						System.out.println("GG!");
+					}
+				}
+				//-------------------
+				
+				//------------------- movimento jogador
+				currTime = System.currentTimeMillis();
+				if(currTime >= p1.getTime() + 1000/Game.MOVEMENT_PER_SECOND)
+				{
+					p1.movimento_acumulado();
+					p1.updateTime();
+				}
+				if(currTime >= p2.getTime() + 1000/Game.MOVEMENT_PER_SECOND)
+				{
+					p2.movimento_acumulado();
+					p2.updateTime();
+				}
+				//-------------------
+				
+				//------------------- adiciona modelos
+				if(p1.getAcao() == 1)
+				{
+					Model n = ms.getModel(p1.getModel()%ms.getAmount());
+					if(p1.getX() + n.getWidth() <= (Game.STATES_WIDTH/2 - Game.BARRIER/Game.TILE_SIZE + 1))
+					{
+						if(p1.getY() + n.getHeight() <= Game.STATES_HEIGHT)
+						{
+							System.out.println("Inserting for p1");
+							gs.addModel(p1, n);
+						}
+					}
+				}
+				if(p2.getAcao() == 1)
+				{
+					Model n = ms.getModel(p2.getModel()%ms.getAmount());
+					if((p2.getX() >= (Game.STATES_WIDTH/2 + Game.BARRIER/Game.TILE_SIZE)) && (p2.getX() + n.getWidth() < Game.STATES_WIDTH))
+					{
+						if(p2.getY() + n.getHeight() <= Game.STATES_HEIGHT)
+						{
+							System.out.println("Inserting for p2");
+							gs.addModel(p2, n);
+						}
+					}
+				}
+				//------------------
+			}
+			else
+			{
+				while(Keyboard.next())
+				{
+					if(Keyboard.getEventKey() == Keyboard.KEY_RETURN)
+					{
+						end = true;
+						cont = true;
+					}
+					else if(Keyboard.getEventKey() == Keyboard.KEY_ESCAPE)
+					{
+						end = true;
+						cont = false;
 					}
 				}
 			}
-			if(p2.getAcao() == 1)
-			{
-				Model n = ms.getModel(p2.getModel()%ms.getAmount());
-				if((p2.getX() >= (Game.STATES_WIDTH/2 + Game.BARRIER/Game.TILE_SIZE)) && (p2.getX() + n.getWidth() < Game.STATES_WIDTH))
-				{
-					if(p2.getY() + n.getHeight() <= Game.STATES_HEIGHT)
-					{
-						System.out.println("Inserting for p2");
-						gs.addModel(p2, n);
-					}
-				}
-			}
-			//------------------
-			
-			//limpa tela
-		    GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
-		    
 		    //desenha tudo
 		    draw();
 		    
 	        Display.update();
 	        Display.sync(60); //60 fps?
+	        if(end == true)
+	        	break;
 	    }
 		     
 	    Display.destroy();
+	    if(cont == true)
+	    	return true;
+	    else
+	    	return false;
 	}
 	
 	private void init() {
@@ -171,6 +202,9 @@ public class Screen {
 	
 	public void draw()
 	{
+		//limpa tela
+	    GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
+	    
 		//System.out.println("Drawing");
         int BORDER_TOP = Game.BORDER_TOP * Game.TILE_SIZE;
         int BORDER_LEFT = 0;
@@ -258,15 +292,91 @@ public class Screen {
 		//---
 		
 		//--- draw time limit
-		long timeleft = gs.getTimeleft();
-		if(timeleft%100 > 0)
-		{
-			
-		}
-		//
+		draw_number((int) gs.getTimeleft(), HEIGHT-Game.POINTS_SIZE*5, Game.SCREEN_WIDTH/2 - Game.POINTS_SIZE*5/2, Game.POINTS_SIZE, 4);
 		
 		//--- draw points
+		draw_number(gs.getPontos1(), HEIGHT-Game.POINTS_SIZE*5, Game.SCREEN_WIDTH/4 - Game.POINTS_SIZE*5/2, Game.POINTS_SIZE, 1);
+		draw_number(gs.getPontos2(), HEIGHT-Game.POINTS_SIZE*5, Game.SCREEN_WIDTH*3/4 - Game.POINTS_SIZE*5/2, Game.POINTS_SIZE, 2);
+		//---
+	}
+	
+	public void draw_number(int number, int ref_y, int ref_x, int size_pixel, int color)
+	{
+		if(number/100 >= 0)
+		{
+			Model n0 = numbers.getModel((int) (number/100)%10);
+			int w_N = n0.getWidth();
+			int h_N = n0.getHeight();
+			int map_N[][] = n0.getMap();
+			
+			for(int j=0; j<h_N; j++)
+			{
+				for(int i=0; i<w_N; i++)
+				{
+					if(map_N[j][i] == 1)
+					{
+						int cima = ref_y - (j*Game.POINTS_SIZE + 1);
+						int baixo = cima - (Game.POINTS_SIZE-2);
+						int esquerda = ref_x + i*Game.POINTS_SIZE + 1 - Game.POINTS_SIZE*w_N;
+						int direita = esquerda + (Game.POINTS_SIZE-2);
+						
+						draw_rect(cima, baixo, esquerda, direita, color);
+					}
+				}
+			}
+		}
 		
+		if(number/10 >= 0)
+		{
+			Model n0 = numbers.getModel((int) (number/10)%10);
+			int w_N = n0.getWidth();
+			int h_N = n0.getHeight();
+			int map_N[][] = n0.getMap();
+			
+			for(int j=0; j<h_N; j++)
+			{
+				for(int i=0; i<w_N; i++)
+				{
+					if(map_N[j][i] == 1)
+					{
+						int cima = ref_y - (j*Game.POINTS_SIZE + 1);
+						int baixo = cima - (Game.POINTS_SIZE-2);
+						int esquerda = ref_x + i*Game.POINTS_SIZE + 1;
+						int direita = esquerda + (Game.POINTS_SIZE-2);
+						
+						draw_rect(cima, baixo, esquerda, direita, color);
+					}
+				}
+			}
+		}
+		
+		int nnumber;
+		if(((int) (number%10)) > 0)
+			nnumber = Math.abs((int) (number%10));
+		else
+			nnumber = 0;
+		
+		Model n0 = numbers.getModel(nnumber);
+		int w_N = n0.getWidth();
+		int h_N = n0.getHeight();
+		int map_N[][] = n0.getMap();
+		
+		for(int j=0; j<h_N; j++)
+		{
+			for(int i=0; i<w_N; i++)
+			{
+				if(map_N[j][i] == 1)
+				{
+					int cima = ref_y - (j*Game.POINTS_SIZE + 1);
+					int baixo = cima - (Game.POINTS_SIZE-2);
+					int esquerda = ref_x + i*Game.POINTS_SIZE + 1 + Game.POINTS_SIZE*w_N;
+					int direita = esquerda + (Game.POINTS_SIZE-2);
+					
+					draw_rect(cima, baixo, esquerda, direita, color);
+				}
+			}
+		}
+		//---
 	}
 	
 	public void draw_rect(int y1, int y2, int x1, int x2, int cor)
@@ -281,7 +391,7 @@ public class Screen {
 			GL11.glColor3f(0.07f, 0.07f, 0.07f);
 		else if(cor == 5) //terra neutra
 			GL11.glColor3f(0.5f, 0.5f, 0.5f);
-		else if(cor == 6)//amarelo - oscilador
+		else if(cor == 6)//verde - oscilador
 			GL11.glColor3f(0.6f, 1.0f, 0.0f);
 		else if(cor == 21)
 		{

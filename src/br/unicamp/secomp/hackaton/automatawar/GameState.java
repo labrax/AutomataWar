@@ -10,6 +10,9 @@ public class GameState {
 	
 	long startTime;
 	
+	private boolean gg = false;
+	long last_time = 0;
+	
 	GameState(int y, int x)
 	{
 		this.height = y;
@@ -36,7 +39,7 @@ public class GameState {
 		    		if(j == x-1)
 		    			System.out.println();
 		    	}
-		}   
+		}
 	}
 	
 	public void addModel(Player p, Model a)
@@ -96,6 +99,9 @@ public class GameState {
 	
 	public void compute_scores()
 	{
+		pontos1 = 0;
+		pontos2 = 0;
+		
 		for(int j=0; j < height; j++)
 		{
 			for(int i=0; i < width/2; i++)
@@ -122,18 +128,26 @@ public class GameState {
 		{
 			for(int i=0; i < width/2; i++)
 			{
-				c1++;
+				if(states[j][i] == 6)
+					c1++;
 			}
 			for(int i=width/2+1; i < width; i++)
 			{
-				c2++;
+				if(states[j][i] == 6)
+					c2++;
 			}
 		}
 		if(c1 == 0 || c2 == 0)
+		{
+			gg = true;
 			return true;
+		}
 		
 		if(getTimeleft() <= 0)
+		{
+			gg = true;
 			return true;
+		}
 		
 		return false;
 	}
@@ -145,7 +159,9 @@ public class GameState {
 	
 	public long getTimeleft()
 	{
-		return (Game.GAME_TIME - (System.currentTimeMillis() - startTime)/1000);
+		if(gg == false)
+			last_time = (Game.GAME_TIME - (System.currentTimeMillis() - startTime)/1000);
+		return last_time;
 	}
 	
 	public int getPontos1()

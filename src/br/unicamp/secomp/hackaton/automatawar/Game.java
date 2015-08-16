@@ -22,23 +22,28 @@ public class Game {
 	public static int UPDATES_PER_SECOND = 10;
 	public static int MOVEMENT_PER_SECOND = 10;
 	
-	public static int POINTS_PER_MODEL_PIXEL = 3; //fator de multiplicação de pontos
-	public static int POINTS_PER_UNIT_ENEMY_BASE = 1;
+	public static int POINTS_PER_MODEL_PIXEL = 10; //fator de multiplicação de pontos
+	public static int POINTS_PER_UNIT_ENEMY_BASE = 3;
 	public static int POINTS_PER_MY_OSCILATOR = 5;
 	
-	public static long GAME_TIME = 100;
+	public static long GAME_TIME = 100; //tempo em segundos
+	public static int POINTS_SIZE = 8;
 	
 	public static void main(String args[])
 	{
-		Player p1 = new Player(1), p2 = new Player(2);
-		Controllers c = new Controllers(p1, p2);
-		GameState gs = new GameState(STATES_HEIGHT, STATES_WIDTH);
-		ModelSelection ms = new ModelSelection();
-		Screen screen = new Screen(SCREEN_HEIGHT, SCREEN_WIDTH, gs, c, p1, p2, ms);
-		
-		p1.set_sel(STATES_WIDTH/2-5, STATES_HEIGHT/2);
-		p2.set_sel(STATES_WIDTH/2+4, STATES_HEIGHT/2);
-		
-		screen.run(); //game!
+		boolean cont = false;
+		do
+		{
+			Player p1 = new Player(1), p2 = new Player(2);
+			Controllers c = new Controllers(p1, p2);
+			GameState gs = new GameState(STATES_HEIGHT, STATES_WIDTH);
+			ModelSelection ms = new ModelSelection();
+			Screen screen = new Screen(SCREEN_HEIGHT, SCREEN_WIDTH, gs, c, p1, p2, ms);
+			
+			p1.set_sel(STATES_WIDTH/2-5, STATES_HEIGHT/2);
+			p2.set_sel(STATES_WIDTH/2+4, STATES_HEIGHT/2);
+			
+			cont = screen.run(); //game!
+		} while(cont);
 	}
 }

@@ -28,6 +28,17 @@ public class Numbers {
 	
 	public void insertModels()
 	{
+		int v0[][] =
+			{
+				{ 0, 1, 1, 1, 0},
+				{ 0, 1, 0, 1, 0},
+				{ 0, 1, 0, 1, 0},
+				{ 0, 1, 0, 1, 0},
+				{ 0, 1, 1, 1, 0}
+			};
+		Model m = new Model("0", v0, 5, 5);
+		addModel(m);
+		
 		int v[][] =
 			{
 				{ 0, 0, 1, 0, 0},
@@ -36,7 +47,7 @@ public class Numbers {
 				{ 0, 0, 1, 0, 0},
 				{ 0, 0, 1, 0, 0},
 			};
-		Model m = new Model("1", v, 4, 5);
+		m = new Model("1", v, 5, 5);
 		addModel(m);
 		
 		int v2[][] =
@@ -47,7 +58,7 @@ public class Numbers {
 				{ 0, 1, 0, 0, 0},
 				{ 0, 1, 1, 1, 0}
 			};
-		m = new Model("2", v2, 4, 5);
+		m = new Model("2", v2, 5, 5);
 		addModel(m);
 		
 		int v3[][] =
@@ -58,7 +69,7 @@ public class Numbers {
 				{ 0, 0, 0, 1, 0},
 				{ 0, 1, 1, 1, 0}
 			};
-		m = new Model("3", v3, 4, 5);
+		m = new Model("3", v3, 5, 5);
 		addModel(m);
 		
 		int v4[][] =
@@ -69,7 +80,7 @@ public class Numbers {
 				{ 0, 0, 0, 1, 0},
 				{ 0, 0, 0, 1, 0}
 			};
-		m = new Model("4", v4, 4, 5);
+		m = new Model("4", v4, 5, 5);
 		addModel(m);
 		
 		int v5[][] =
@@ -80,7 +91,7 @@ public class Numbers {
 				{ 0, 0, 0, 1, 0},
 				{ 0, 1, 1, 1, 0}
 			};
-		m = new Model("5", v5, 4, 5);
+		m = new Model("5", v5, 5, 5);
 		addModel(m);
 		
 		int v6[][] =
@@ -91,7 +102,7 @@ public class Numbers {
 				{ 0, 1, 0, 1, 0},
 				{ 0, 1, 1, 1, 0}
 			};
-		m = new Model("6", v6, 4, 5);
+		m = new Model("6", v6, 5, 5);
 		addModel(m);
 		
 		int v7[][] =
@@ -102,7 +113,7 @@ public class Numbers {
 				{ 0, 0, 0, 1, 0},
 				{ 0, 0, 0, 1, 0}
 			};
-		m = new Model("7", v7, 4, 5);
+		m = new Model("7", v7, 5, 5);
 		addModel(m);
 		
 		int v8[][] =
@@ -113,7 +124,7 @@ public class Numbers {
 				{ 0, 1, 0, 1, 0},
 				{ 0, 1, 1, 1, 0}
 			};
-		m = new Model("8", v8, 4, 5);
+		m = new Model("8", v8, 5, 5);
 		addModel(m);
 		
 		int v9[][] =
@@ -124,18 +135,7 @@ public class Numbers {
 				{ 0, 0, 0, 1, 0},
 				{ 0, 1, 1, 1, 0}
 			};
-		m = new Model("9", v9, 4, 5);
-		addModel(m);
-		
-		int v0[][] =
-			{
-				{ 0, 1, 1, 1, 0},
-				{ 0, 1, 0, 1, 0},
-				{ 0, 1, 0, 1, 0},
-				{ 0, 1, 0, 1, 0},
-				{ 0, 1, 1, 1, 0}
-			};
-		m = new Model("0", v0, 4, 5);
+		m = new Model("9", v9, 5, 5);
 		addModel(m);
 	}
 }
