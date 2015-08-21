@@ -4,11 +4,11 @@ import java.io.File;
 import java.awt.*;
 
 public class Game {	
-	public static boolean RANDOM = false; //o mapa inicial é aleatório (normal = false)
-	public static boolean COMPUTE = true; //se desativar isto o jogo fica estático! (false)
+	public static boolean RANDOM = false; //o mapa inicial Ã© aleatÃ³rio (normal = false)
+	public static boolean COMPUTE = true; //se desativar isto o jogo fica estÃ¡tico! (false)
 	
 	public static boolean FULLSCREEN; //tela cheia
-	public static int SCREEN_WIDTH; //resolução do jogo
+	public static int SCREEN_WIDTH; //resoluÃ§Ã£o do jogo
 	public static int SCREEN_HEIGHT;
 	
 	public static int STATES_WIDTH; //quantidade de elementos
@@ -22,10 +22,10 @@ public class Game {
 	
 	public static int BARRIER = TILE_SIZE*5; //barreira a cada lado no meio (em pixels)
 	
-	public static int UPDATES_PER_SECOND = 10; //atualizações do jogo (normal = 10)
+	public static int UPDATES_PER_SECOND = 10; //atualizaÃ§Ãµes do jogo (normal = 10)
 	public static int MOVEMENT_PER_SECOND = 20; //movimento do jogador em quadrados/s (normal = 20)
 	
-	public static int POINTS_PER_MODEL_PIXEL = 7; //fator de multiplicação de pontos (7)
+	public static int POINTS_PER_MODEL_PIXEL = 7; //fator de multiplicaÃ§Ã£o de pontos (7)
 	public static int POINTS_PER_UNIT_ENEMY_BASE = 5; // (5)
 	public static int POINTS_PER_MY_OSCILATOR = 15; // (15)
 	
@@ -55,7 +55,7 @@ public class Game {
 			System.setProperty("org.lwjgl.librarypath", new File("native/macosx").getAbsolutePath());
 		
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-		/*caso queira forçar uma resolução mude aqui*/
+		/*caso queira forÃ§ar uma resoluÃ§Ã£o mude aqui*/
 		Game.SCREEN_WIDTH = (int) screenSize.getWidth();
 		Game.SCREEN_HEIGHT = (int) screenSize.getHeight();
 		Game.FULLSCREEN = true;

@@ -1,7 +1,7 @@
 package br.unicamp.secomp.hackaton.automatawar;
 
 public class Player {
-	private int sel_x, sel_y; //posição do jogador
+	private int sel_x, sel_y; //posiÃ§Ã£o do jogador
 	private int op; //indica se o jogador clicou
 	
 	long time;

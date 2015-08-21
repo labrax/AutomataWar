@@ -7,24 +7,23 @@ import org.lwjgl.opengl.*;
 
 import static org.lwjgl.opengl.GL11.*;
 
-
-//TODO: separar este código em Screen/Draw/Game
+//TODO: separar este cÃ³digo em Screen/Draw/Game
 public class Screen {
 	private int WIDTH, HEIGHT; //tamanho da tela
 	
-	private GameState gs; //informações do mapa
+	private GameState gs; //informaÃ§Ãµes do mapa
 	private Controllers c; //controles dos jogadores
-	private Player p1, p2; //informações de posição e teclas dos jogadores
+	private Player p1, p2; //informaÃ§Ãµes de posiÃ§Ã£o e teclas dos jogadores
 	
 	int p1_color = 0; //contadores para a cor dos jogadores
 	int p2_color = 0;
 	
 	ModelSelection ms; //guarda os modelos
 	
-	Numbers numbers; //guarda os números do jogo
+	Numbers numbers; //guarda os nÃºmeros do jogo
 	
-	private boolean gg; //indica se o jogo acabou ou não
-	int high1, high2; //variável para indicar o valor anterior do som de highscore!
+	private boolean gg; //indica se o jogo acabou ou nÃ£o
+	int high1, high2; //variÃ¡vel para indicar o valor anterior que teve som de highscore!
 	
 	public Screen(int y, int x, GameState gs, Controllers c, Player p1, Player p2, ModelSelection ms)
 	{
@@ -60,6 +59,7 @@ public class Screen {
 		addBase();
 	}
 	
+	//adiciona os osciladores no jogo
 	public void addBase()
 	{
 		Player p3 = new Player(6);
@@ -98,7 +98,7 @@ public class Screen {
 				{1, 0, 1, 0, 0, 1},
 				{1, 1, 0, 0, 1, 1}
 			};
-		m = new Model("Relógio", v9, 6, 6);
+		m = new Model("Relï¿½gio", v9, 6, 6);
 		p3.set_sel(m.getWidth()+4, Game.STATES_HEIGHT/2 + 10);
 		gs.addModel(p3, m);
 		
@@ -166,9 +166,10 @@ public class Screen {
 		gs.addModel(p3, m);		
 	}
 	
+	//loop do programa
 	public void run()
 	{
-		boolean end = false; //pra ver se fecha ou não o jogo
+		boolean end = false; //pra ver se fecha ou nï¿½o o jogo
 		long currTime, lastTime=0;
 		
 		while(!Display.isCloseRequested())
@@ -269,28 +270,24 @@ public class Screen {
 	    Display.destroy();
 	}
 	
+	//funÃ§Ãµes para iniciar o display
 	private void init() {
-		initDisplay();
-		initOGL();
-	}
-	 
-	private void initDisplay() {
 	    try
 	    {
 	    	Display.setDisplayMode(new DisplayMode(WIDTH, HEIGHT));
 	        Display.setTitle("Automata War!");
 	        Display.setFullscreen(Game.FULLSCREEN);
 	        if(Game.FULLSCREEN)
+	        {
 	        	System.setProperty("org.lwjgl.opengl.Window.undecorated", "true");
+	        }
 	        Display.create();
 	    }
 	    catch(LWJGLException e)
 	    {
 	        e.printStackTrace();
 	    }
-	}
-	 
-	private void initOGL() {
+	    
 	    glMatrixMode(GL_PROJECTION);
 	    glLoadIdentity();
 	    glOrtho(0, WIDTH, 0, HEIGHT, 1, -1);
@@ -300,6 +297,7 @@ public class Screen {
 	    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	}
 	
+	//funÃ§Ãµes para desenhar!
 	public void draw()
 	{
 		//limpa tela
@@ -317,7 +315,7 @@ public class Screen {
 		int gs_w = gs.getWidth();
 		int gs_h = gs.getHeight();
 		
-		// está desenhando de cima pra baixo
+		// estï¿½ desenhando de cima pra baixo
 		for(int i=0; i < gs_h; i++)
 		{
 			for(int j=0; j < gs_w; j++)
@@ -603,6 +601,4 @@ public class Screen {
 	    GL11.glVertex2f(x1, y2);
 	    GL11.glEnd();
 	}
-	
-
 }
