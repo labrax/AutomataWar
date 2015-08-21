@@ -20,27 +20,39 @@ public class GameState {
 		this.width = x;
 		states = new int[height][width];
 		
+		reset();
+	}
+	
+	public void reset()
+	{
+		states = new int[height][width];
 		if(Game.RANDOM)
 		{
 		    Random rand = new Random(); 
 		    rand.setSeed(System.currentTimeMillis()); 
-		    for (int i = 0; i < y; i++)
+		    for (int i = 0; i < height; i++)
 		    {     
-			    for (int j = 0; j < x; j++)
+			    for (int j = 0; j < width; j++)
 			    {
 			        Integer r = rand.nextInt()%3; 
 			        states[i][j] = Math.abs(r);
 			    }
 			}
 		    
-		    for(int i=0; i < y; i++)
-		    	for(int j=0; j < x; j++)
+		    for(int i=0; i < height; i++)
+		    	for(int j=0; j < width; j++)
 		    	{
 		    		System.out.print(states[i][j]);
-		    		if(j == x-1)
+		    		if(j == width-1)
 		    			System.out.println();
 		    	}
 		}
+		
+		gg = false;
+		time = false;
+		last_time = 0;
+		
+		startTime = System.currentTimeMillis();
 	}
 	
 	public void addModel(Player p, Model a)
@@ -163,11 +175,6 @@ public class GameState {
 	public boolean isGGtime()
 	{
 		return time;
-	}
-	
-	public void start()
-	{
-		startTime = System.currentTimeMillis();
 	}
 	
 	public long getTimeleft()

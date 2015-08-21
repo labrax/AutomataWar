@@ -7,8 +7,7 @@ public class Game {
 	public static boolean RANDOM = false; //o mapa inicial é aleatório (normal = false)
 	public static boolean COMPUTE = true; //se desativar isto o jogo fica estático! (false)
 	
-	public static boolean FULLSCREEN = true; //tela cheia (true)
-
+	public static boolean FULLSCREEN; //tela cheia
 	public static int SCREEN_WIDTH; //resolução do jogo
 	public static int SCREEN_HEIGHT;
 	
@@ -44,6 +43,8 @@ public class Game {
 	
 	public static boolean NEVER_GG = false; //NEVER ENDING MODE (false)
 	
+	public static int SCORES_TO_SOUND = 500; //quantia de pontos acima do maior anterior para tocar som
+	
 	public static void startConfig()
 	{
 		if(System.getProperty("os.name").startsWith("Windows"))
@@ -54,8 +55,12 @@ public class Game {
 			System.setProperty("org.lwjgl.librarypath", new File("native/macosx").getAbsolutePath());
 		
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		/*caso queira forçar uma resolução mude aqui*/
 		Game.SCREEN_WIDTH = (int) screenSize.getWidth();
 		Game.SCREEN_HEIGHT = (int) screenSize.getHeight();
+		Game.FULLSCREEN = true;
+		/*!!*/
+		
 		Game.STATES_WIDTH = SCREEN_WIDTH/TILE_SIZE;
 		Game.STATES_HEIGHT = SCREEN_HEIGHT/TILE_SIZE - BORDER_TOP;
 	}
@@ -63,20 +68,13 @@ public class Game {
 	public static void main(String args[])
 	{
 		startConfig();
+
+		Player p1 = new Player(1), p2 = new Player(2);
+		Controllers c = new Controllers(p1, p2);
+		ModelSelection ms = new ModelSelection();
+		GameState gs = new GameState(STATES_HEIGHT, STATES_WIDTH);
+		Screen screen = new Screen(SCREEN_HEIGHT, SCREEN_WIDTH, gs, c, p1, p2, ms);
 		
-		boolean cont = false;
-		do
-		{
-			Player p1 = new Player(1), p2 = new Player(2);
-			Controllers c = new Controllers(p1, p2);
-			GameState gs = new GameState(STATES_HEIGHT, STATES_WIDTH);
-			ModelSelection ms = new ModelSelection();
-			Screen screen = new Screen(SCREEN_HEIGHT, SCREEN_WIDTH, gs, c, p1, p2, ms);
-			
-			p1.set_sel(STATES_WIDTH/2-5, STATES_HEIGHT/2);
-			p2.set_sel(STATES_WIDTH/2+4, STATES_HEIGHT/2);
-			
-			cont = screen.run(); //game!
-		} while(cont);
+		screen.run(); //game!
 	}
 }

@@ -8,22 +8,21 @@ import org.lwjgl.opengl.*;
 import static org.lwjgl.opengl.GL11.*;
 
 public class Screen {
-	int p1_color = 0;
+	private int WIDTH, HEIGHT; //tamanho da tela
+	
+	private GameState gs; //informações do mapa
+	private Controllers c; //controles dos jogadores
+	private Player p1, p2; //informações de posição e teclas dos jogadores
+	
+	int p1_color = 0; //contadores para a cor dos jogadores
 	int p2_color = 0;
 	
-	private int WIDTH, HEIGHT;
+	ModelSelection ms; //guarda os modelos
 	
-	private GameState gs;
-	private Controllers c;
-	private Player p1, p2;
+	Numbers numbers; //guarda os números do jogo
 	
-	ModelSelection ms;
-	
-	Numbers numbers;
-	
-	private boolean gg = false;
-	
-	int high1=500, high2=500;
+	private boolean gg; //indica se o jogo acabou ou não
+	int high1, high2; //variável para indicar o valor anterior do som de highscore!
 	
 	public Screen(int y, int x, GameState gs, Controllers c, Player p1, Player p2, ModelSelection ms)
 	{
@@ -38,10 +37,26 @@ public class Screen {
 		HEIGHT = y;
 		WIDTH = x;
 		
-		addBase();
+		reset();
+		
 		init();
 	}
 	
+	public void reset()
+	{
+		gs.reset();
+		p1.reset();
+		p2.reset();
+		
+		p1.set_sel(gs.getWidth()/2-5, gs.getHeight()/2);
+		p2.set_sel(gs.getWidth()/2+4, gs.getHeight()/2);
+		
+		high1 = 500;
+		high2 = 500;
+		gg = false;
+		
+		addBase();
+	}
 	
 	public void addBase()
 	{
@@ -149,11 +164,11 @@ public class Screen {
 		gs.addModel(p3, m);		
 	}
 	
-	public boolean run()
+	public void run()
 	{
-		boolean end = false, cont = false;
+		boolean end = false; //pra ver se fecha ou não o jogo
 		long currTime, lastTime=0;
-		gs.start();
+		
 		while(!Display.isCloseRequested())
 		{
 			glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
@@ -231,13 +246,12 @@ public class Screen {
 				{
 					if(Keyboard.getEventKey() == Keyboard.KEY_RETURN)
 					{
-						end = true;
-						cont = true;
+						end = false;
+						reset();
 					}
 					else if(Keyboard.getEventKey() == Keyboard.KEY_ESCAPE)
 					{
 						end = true;
-						cont = false;
 					}
 				}
 			}
@@ -251,10 +265,6 @@ public class Screen {
 	    }
 		     
 	    Display.destroy();
-	    if(cont == true)
-	    	return true;
-	    else
-	    	return false;
 	}
 	
 	private void init() {
@@ -385,13 +395,13 @@ public class Screen {
 		
 		//--- draw points
 		int pontos1 = gs.getPontos1();
-		if(pontos1 > high1 + 500)
+		if(pontos1 > high1 + Game.SCORES_TO_SOUND)
 		{
 			high1 = pontos1;
 			Sound.playSoundPontos();
 		}
 		int pontos2 = gs.getPontos2();
-		if(pontos2 > high2 + 500)
+		if(pontos2 > high2 + Game.SCORES_TO_SOUND)
 		{
 			high2 = pontos2;
 			Sound.playSoundPontos();
