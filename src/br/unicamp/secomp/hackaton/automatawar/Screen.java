@@ -7,6 +7,8 @@ import org.lwjgl.opengl.*;
 
 import static org.lwjgl.opengl.GL11.*;
 
+
+//TODO: separar este código em Screen/Draw/Game
 public class Screen {
 	private int WIDTH, HEIGHT; //tamanho da tela
 	

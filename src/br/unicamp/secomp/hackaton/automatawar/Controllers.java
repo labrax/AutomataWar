@@ -5,6 +5,7 @@ import org.lwjgl.input.Keyboard;
 public class Controllers {
 	Player p1, p2;
 	
+	//p1
 	public static final int up1 = Keyboard.KEY_W;
 	public static final int down1 = Keyboard.KEY_S;
 	public static final int left1 = Keyboard.KEY_A;
@@ -13,6 +14,7 @@ public class Controllers {
 	public static final int act1 = Keyboard.KEY_SPACE;
 	public static final int select1 = Keyboard.KEY_TAB;
 	
+	//p2
 	public static final int up2 = Keyboard.KEY_UP;
 	public static final int down2 = Keyboard.KEY_DOWN;
 	public static final int left2 = Keyboard.KEY_LEFT;
@@ -20,6 +22,10 @@ public class Controllers {
 	
 	public static final int act2 = Keyboard.KEY_N;
 	public static final int select2 = Keyboard.KEY_M;
+	
+	//other
+	public static final int tile_minus = Keyboard.KEY_F1;
+	public static final int tile_more = Keyboard.KEY_F2;
 	
 	public Controllers(Player p1, Player p2) 
 	{
@@ -34,6 +40,7 @@ public class Controllers {
 			int key_state = Keyboard.getEventKey();
 			switch(key_state)
 			{
+				//jogador 1
 				case up1:
 					if(Keyboard.isKeyDown(up1))
 						p1.up(true);
@@ -67,6 +74,7 @@ public class Controllers {
 						p1.sel();
 					break;
 					
+				//jogador 2
 				case up2:
 					if(Keyboard.isKeyDown(up2))
 						p2.up(true);
@@ -98,6 +106,13 @@ public class Controllers {
 				case select2:
 					if(Keyboard.isKeyDown(select2))
 						p2.sel();
+					break;
+					
+					
+				//TODO: comando para aumentar/diminuir o tamanho dos tiles (para caber mais coisa)
+				case tile_minus:
+					break;
+				case tile_more:
 					break;
 			}
 		}
