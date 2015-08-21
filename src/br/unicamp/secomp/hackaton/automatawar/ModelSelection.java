@@ -61,7 +61,6 @@ public class ModelSelection {
 			addModel(1, m);
 			addModel(2, m);
 			
-			
 			int v2[][] =
 				{
 					{0, 0, 0, 0, 0},
@@ -84,6 +83,31 @@ public class ModelSelection {
 				};
 			m = new Model("Beehive", v3, 5, 6);
 			//addModel(m);
+		}
+		
+		if(Game.PENTOMINO)
+		{
+			int v[][] =
+				{
+					{ 0, 0, 0, 0, 0},
+					{ 0, 0, 1, 1, 0},
+					{ 0, 1, 1, 0, 0},
+					{ 0, 0, 1, 0, 0},
+					{ 0, 0, 0, 0, 0}
+				};
+			m = new Model("R-Pentomino", v, 5, 5);
+			addModel(1, m);
+			
+			int v2[][] =
+				{
+					{ 0, 0, 0, 0, 0},
+					{ 0, 0, 1, 0, 0},
+					{ 0, 0, 1, 1, 0},
+					{ 0, 1, 1, 0, 0},
+					{ 0, 0, 0, 0, 0}
+				};
+			m = new Model("R-Pentomino", v2, 5, 5);
+			addModel(2, m);
 		}
 		
 		if(Game.MAY_GLIDER)

@@ -37,6 +37,8 @@ public class Game {
 	public static boolean FACTORY = true; // (true)
 	public static boolean SPACESHIP = true; // (true)
 	
+	public static boolean PENTOMINO = false; // super bomba!
+	
 	public static boolean NEVER_GG = false; //NEVER ENDING MODE (false)
 	
 	public static void main(String args[])
