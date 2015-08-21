@@ -1,22 +1,25 @@
 package br.unicamp.secomp.hackaton.automatawar;
 
+import java.io.File;
+import java.awt.*;
+
 public class Game {	
 	public static boolean RANDOM = false; //o mapa inicial é aleatório (normal = false)
 	public static boolean COMPUTE = true; //se desativar isto o jogo fica estático! (false)
 	
 	public static boolean FULLSCREEN = true; //tela cheia (true)
 
-	public static int SCREEN_WIDTH = 1920; //resolução do jogo (1920)
-	public static int SCREEN_HEIGHT = 1080; //(1080)
+	public static int SCREEN_WIDTH; //resolução do jogo
+	public static int SCREEN_HEIGHT;
+	
+	public static int STATES_WIDTH; //quantidade de elementos
+	public static int STATES_HEIGHT;
 	
 	public static int BORDER_TOP = 10; //tamanho da borda de cima (10)
 	
 	public static int TILE_SIZE = 10; //tamanho dos quadrados (10)
 	
 	public static int MODEL_SIZE = 5; //tamanho do modelo de cima (5)
-	
-	public static int STATES_WIDTH = SCREEN_WIDTH/TILE_SIZE; //quantidade de elementos (horizontal)
-	public static int STATES_HEIGHT = SCREEN_HEIGHT/TILE_SIZE - BORDER_TOP; //quantidade de elementos (vertical)
 	
 	public static int BARRIER = TILE_SIZE*5; //barreira a cada lado no meio (em pixels)
 	
@@ -41,8 +44,26 @@ public class Game {
 	
 	public static boolean NEVER_GG = false; //NEVER ENDING MODE (false)
 	
+	public static void startConfig()
+	{
+		if(System.getProperty("os.name").startsWith("Windows"))
+			System.setProperty("org.lwjgl.librarypath", new File("native/windows").getAbsolutePath());
+		else if(System.getProperty("os.name").startsWith("Linux"))
+			System.setProperty("org.lwjgl.librarypath", new File("native/linux").getAbsolutePath());
+		else if(System.getProperty("os.name").startsWith("Mac"))
+			System.setProperty("org.lwjgl.librarypath", new File("native/macosx").getAbsolutePath());
+		
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		Game.SCREEN_WIDTH = (int) screenSize.getWidth();
+		Game.SCREEN_HEIGHT = (int) screenSize.getHeight();
+		Game.STATES_WIDTH = SCREEN_WIDTH/TILE_SIZE;
+		Game.STATES_HEIGHT = SCREEN_HEIGHT/TILE_SIZE - BORDER_TOP;
+	}
+	
 	public static void main(String args[])
 	{
+		startConfig();
+		
 		boolean cont = false;
 		do
 		{

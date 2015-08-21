@@ -67,6 +67,5 @@ The game:
 		
 This game was created using:
 	LWJGL 2.9.3: http://legacy.lwjgl.org/
-	Dont forget to configure the build path (insert the library) AND the native files (good luck with that haha)
 
 Be sure to have the sound files on the right folder... and dont forget that Game class has many options!
