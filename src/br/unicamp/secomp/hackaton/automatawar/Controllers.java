@@ -125,14 +125,25 @@ public class Controllers {
 		}
 	}
 	
+	//TODO: corrigir bug do jogo não fechar com pouco tempo
 	public boolean exit_game()
 	{
-		while(Keyboard.next())
+		boolean done = false;
+		while(done == false)
 		{
-			if(Keyboard.getEventKey() == Keyboard.KEY_RETURN)
-				return false;
-			else if(Keyboard.getEventKey() == Keyboard.KEY_ESCAPE)
-				return true;
+			while(Keyboard.next())
+			{
+				if(Keyboard.isKeyDown(Keyboard.KEY_RETURN))
+				{
+					done = true;
+					return false;
+				}
+				else if(Keyboard.isKeyDown(Keyboard.KEY_ESCAPE))
+				{
+					done = true;
+					return true;
+				}
+			}
 		}
 		return false;
 	}

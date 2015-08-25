@@ -27,7 +27,7 @@ public class Config {
 	public static int POINTS_PER_UNIT_ENEMY_BASE = 5; // (5)
 	public static int POINTS_PER_MY_OSCILATOR = 15; // (15)
 	
-	public static long GAME_TIME = 180; //tempo em segundos do jogo // (180)
+	public static long GAME_TIME = 1; //tempo em segundos do jogo // (180)
 	public static int POINTS_SIZE = 8; //tamanho da letra de pontos // (8)
 	
 	public static boolean ITS_A_PUTARIA = false; //CHEAT MODE! may place blocks on other players (false)
