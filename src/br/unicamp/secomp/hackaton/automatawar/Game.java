@@ -9,6 +9,7 @@ public class Game {
 	private ModelSelection ms;
 	private GameState gs;
 	private Screen screen;
+	private Sound sound;
 	
 	private boolean gg; //indica se o jogo acabou ou não
 	private int high1, high2; //variável para indicar o valor anterior que teve som de highscore!
@@ -40,8 +41,9 @@ public class Game {
 		p2 = new Player(2);
 		c = new Controllers(p1, p2);
 		ms = new ModelSelection();
-		screen = new Screen();
+		screen = new Screen(); //SCREEN DEVE SER INICIADO ANTES DE GAMESTATE!
 		gs = new GameState(Config.STATES_HEIGHT, Config.STATES_WIDTH);
+		sound = new Sound();
 	}
 	
 	public void init()
@@ -196,9 +198,9 @@ public class Game {
 						gg = true;
 						
 						if(gs.isGGtime())
-							Sound.playSoundTimeLimit();
+							sound.playSound(Sound.SoundType.SOUND_TIMELIMIT);
 						else
-							Sound.playSoundAcabou();
+							sound.playSound(Sound.SoundType.SOUND_ACABOU);
 						System.out.println("GG!");
 					}
 				}
@@ -232,7 +234,7 @@ public class Game {
 						{
 							//System.out.println("Inserting for p1");
 							gs.addModel(p1, n);
-							Sound.playSoundPlacement();
+							sound.playSound(Sound.SoundType.SOUND_PLACEMENT);
 						}
 					}
 				}
@@ -245,7 +247,7 @@ public class Game {
 						{
 							//System.out.println("Inserting for p2");
 							gs.addModel(p2, n);
-							Sound.playSoundPlacement();
+							sound.playSound(Sound.SoundType.SOUND_PLACEMENT);
 						}
 					}
 				}
@@ -262,13 +264,13 @@ public class Game {
 			if(p1.getPoints() > high1 + Config.SCORES_TO_SOUND)
 			{
 				high1 = p1.getPoints();
-				Sound.playSoundPontos();
+				sound.playSound(Sound.SoundType.SOUND_PONTOS);
 			}
 			p2.setPoints(gs.getPontos2());
 			if(p2.getPoints() > high2 + Config.SCORES_TO_SOUND)
 			{
 				high2 = p2.getPoints();
-				Sound.playSoundPontos();
+				sound.playSound(Sound.SoundType.SOUND_PONTOS);
 			}
 			//----------
 			
