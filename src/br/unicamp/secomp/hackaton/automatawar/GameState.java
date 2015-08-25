@@ -26,7 +26,7 @@ public class GameState {
 	public void reset()
 	{
 		states = new int[height][width];
-		if(Game.RANDOM)
+		if(Config.RANDOM)
 		{
 		    Random rand = new Random(); 
 		    rand.setSeed(System.currentTimeMillis()); 
@@ -74,13 +74,13 @@ public class GameState {
 		
 		if(p.getNumber() == 1)
 		{
-			pontos2_acumulado += count_pixels*Game.POINTS_PER_MODEL_PIXEL;
-			System.out.println("Player 1 added a \"" + a.getName() + "\"! Player 2 awarded " + count_pixels*Game.POINTS_PER_MODEL_PIXEL);
+			pontos2_acumulado += count_pixels*Config.POINTS_PER_MODEL_PIXEL;
+			System.out.println("Player 1 added a \"" + a.getName() + "\"! Player 2 awarded " + count_pixels*Config.POINTS_PER_MODEL_PIXEL);
 		}
 		else if(p.getNumber() == 2)
 		{
-			pontos1_acumulado += count_pixels*Game.POINTS_PER_MODEL_PIXEL;
-			System.out.println("Player 2 added a \"" + a.getName() + "\"! Player 1 awarded " + count_pixels*Game.POINTS_PER_MODEL_PIXEL);
+			pontos1_acumulado += count_pixels*Config.POINTS_PER_MODEL_PIXEL;
+			System.out.println("Player 2 added a \"" + a.getName() + "\"! Player 1 awarded " + count_pixels*Config.POINTS_PER_MODEL_PIXEL);
 		}
 		
 	}
@@ -126,16 +126,16 @@ public class GameState {
 			for(int i=0; i < width/2; i++)
 			{
 				if(states[j][i] != 0 && states[j][i] != 6)
-					pontos2 += Game.POINTS_PER_UNIT_ENEMY_BASE;
+					pontos2 += Config.POINTS_PER_UNIT_ENEMY_BASE;
 				else if(states[j][i] == 6)
-					pontos1 += Game.POINTS_PER_MY_OSCILATOR;
+					pontos1 += Config.POINTS_PER_MY_OSCILATOR;
 			}
 			for(int i=width/2+1; i < width; i++)
 			{
 				if(states[j][i] != 0 && states[j][i] != 6)
-					pontos1 += Game.POINTS_PER_UNIT_ENEMY_BASE;
+					pontos1 += Config.POINTS_PER_UNIT_ENEMY_BASE;
 				else if(states[j][i] == 6)
-					pontos2 += Game.POINTS_PER_MY_OSCILATOR;
+					pontos2 += Config.POINTS_PER_MY_OSCILATOR;
 			}
 		}
 	}
@@ -180,7 +180,7 @@ public class GameState {
 	public long getTimeleft()
 	{
 		if(gg == false)
-			last_time = (Game.GAME_TIME - (System.currentTimeMillis() - startTime)/1000);
+			last_time = (Config.GAME_TIME - (System.currentTimeMillis() - startTime)/1000);
 		return last_time;
 	}
 	

@@ -13,6 +13,8 @@ public class Player {
 	private int vertical = 0;
 	private int horizontal = 0;
 	
+	int points;
+	
 	public Player(int p)
 	{
 		op = 0;
@@ -29,9 +31,9 @@ public class Player {
 	
 	public void set_sel(int x, int y)
 	{
-		if(x >= 0 && x < Game.STATES_WIDTH)
+		if(x >= 0 && x < Config.STATES_WIDTH)
 			sel_x = x;
-		if(y >= 0 && y < Game.STATES_HEIGHT)
+		if(y >= 0 && y < Config.STATES_HEIGHT)
 			sel_y = y;
 		
 		//System.out.println("Player " + player_number + " at: " + sel_x + "," + sel_y);
@@ -151,5 +153,15 @@ public class Player {
 	public int getModel()
 	{
 		return selected_model;
+	}
+	
+	public void setPoints(int points)
+	{
+		this.points = points;
+	}
+	
+	public int getPoints()
+	{
+		return points;
 	}
 }

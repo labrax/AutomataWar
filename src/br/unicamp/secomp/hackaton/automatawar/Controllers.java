@@ -124,4 +124,16 @@ public class Controllers {
 			}
 		}
 	}
+	
+	public boolean exit_game()
+	{
+		while(Keyboard.next())
+		{
+			if(Keyboard.getEventKey() == Keyboard.KEY_RETURN)
+				return false;
+			else if(Keyboard.getEventKey() == Keyboard.KEY_ESCAPE)
+				return true;
+		}
+		return false;
+	}
 }

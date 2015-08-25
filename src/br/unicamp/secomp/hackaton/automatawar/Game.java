@@ -2,49 +2,18 @@ package br.unicamp.secomp.hackaton.automatawar;
 
 import java.io.File;
 
-public class Game {	
-	public static boolean RANDOM = false; //o mapa inicial é aleatório (normal = false)
-	public static boolean COMPUTE = true; //se desativar isto o jogo fica estático! (false)
+public class Game {
+	//objetos auxiliares controlando diversas partes do jogo
+	private Player p1, p2;
+	private Controllers c;
+	private ModelSelection ms;
+	private GameState gs;
+	private Screen screen;
 	
-	public static boolean FULLSCREEN; //tela cheia
-	public static int SCREEN_WIDTH; //resolução do jogo
-	public static int SCREEN_HEIGHT;
+	private boolean gg; //indica se o jogo acabou ou não
+	private int high1, high2; //variável para indicar o valor anterior que teve som de highscore!
 	
-	public static int STATES_WIDTH; //quantidade de elementos
-	public static int STATES_HEIGHT;
-	
-	public static int BORDER_TOP = 10; //tamanho da borda de cima (10)
-	
-	public static int TILE_SIZE = 10; //tamanho dos quadrados (10)
-	
-	public static int MODEL_SIZE = 5; //tamanho do modelo de cima (5)
-	
-	public static int BARRIER = TILE_SIZE*5; //barreira a cada lado no meio (em pixels)
-	
-	public static int UPDATES_PER_SECOND = 10; //atualizações do jogo (normal = 10)
-	public static int MOVEMENT_PER_SECOND = 20; //movimento do jogador em quadrados/s (normal = 20)
-	
-	public static int POINTS_PER_MODEL_PIXEL = 7; //fator de multiplicação de pontos (7)
-	public static int POINTS_PER_UNIT_ENEMY_BASE = 5; // (5)
-	public static int POINTS_PER_MY_OSCILATOR = 15; // (15)
-	
-	public static long GAME_TIME = 180; //tempo em segundos do jogo // (180)
-	public static int POINTS_SIZE = 8; //tamanho da letra de pontos // (8)
-	
-	public static boolean ITS_A_PUTARIA = false; //CHEAT MODE! may place blocks on other players (false)
-	
-	public static boolean SHIELD = true; //may place shields! (true)
-	public static boolean MAY_GLIDER = true; //and etc (true)
-	public static boolean FACTORY = true; // (true)
-	public static boolean SPACESHIP = true; // (true)
-	
-	public static boolean PENTOMINO = false; // super bomba!
-	
-	public static boolean NEVER_GG = false; //NEVER ENDING MODE (false)
-	
-	public static int SCORES_TO_SOUND = 500; //quantia de pontos acima do maior anterior para tocar som
-	
-	public static void startConfig()
+	public static void start_native_libraries()
 	{
 		if(System.getProperty("os.name").startsWith("Windows"))
 			System.setProperty("org.lwjgl.librarypath", new File("native/windows").getAbsolutePath());
@@ -52,30 +21,262 @@ public class Game {
 			System.setProperty("org.lwjgl.librarypath", new File("native/linux").getAbsolutePath());
 		else if(System.getProperty("os.name").startsWith("Mac"))
 			System.setProperty("org.lwjgl.librarypath", new File("native/macosx").getAbsolutePath());
-		
-		Screen.get_biggest_display();
-	}
-	
-	public static void setResolution(int width, int height, boolean fullscreen)
-	{
-		Game.SCREEN_WIDTH = width;
-		Game.SCREEN_HEIGHT = height;
-		Game.FULLSCREEN = fullscreen;
-		
-		Game.STATES_WIDTH = SCREEN_WIDTH/TILE_SIZE;
-		Game.STATES_HEIGHT = SCREEN_HEIGHT/TILE_SIZE - BORDER_TOP;
 	}
 	
 	public static void main(String args[])
 	{
-		startConfig();
-
-		Player p1 = new Player(1), p2 = new Player(2);
-		Controllers c = new Controllers(p1, p2);
-		ModelSelection ms = new ModelSelection();
-		GameState gs = new GameState(STATES_HEIGHT, STATES_WIDTH);
-		Screen screen = new Screen(SCREEN_HEIGHT, SCREEN_WIDTH, gs, c, p1, p2, ms);
+		start_native_libraries();
 		
-		screen.run(); //game!
+		Game game = new Game();
+		
+		game.init();
+		game.reset();
+		game.run();
+	}
+	
+	protected Game()
+	{
+		p1 = new Player(1);
+		p2 = new Player(2);
+		c = new Controllers(p1, p2);
+		ms = new ModelSelection();
+		screen = new Screen();
+		gs = new GameState(Config.STATES_HEIGHT, Config.STATES_WIDTH);
+	}
+	
+	public void init()
+	{
+		screen.init();
+	}
+	
+	public void reset()
+	{
+		gs.reset();
+		p1.reset();
+		p2.reset();
+		
+		p1.set_sel(gs.getWidth()/2-5, gs.getHeight()/2);
+		p2.set_sel(gs.getWidth()/2+4, gs.getHeight()/2);
+		
+		high1 = 500;
+		high2 = 500;
+		gg = false;
+		
+		addBase();
+	}
+	
+	//adiciona os osciladores no jogo
+		public void addBase()
+		{
+			Player p3 = new Player(6);
+			int v8[][] =
+				{
+					{0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0},
+					{0 ,0 ,0 ,1 ,1 ,1 ,0 ,0 ,0 ,1 ,1 ,1 ,0 ,0 ,0},
+					{0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0},
+					{0 ,1 ,0 ,0 ,0 ,0 ,1 ,0 ,1 ,0 ,0 ,0 ,0 ,1 ,0},
+					{0 ,1 ,0 ,0 ,0 ,0 ,1 ,0 ,1 ,0 ,0 ,0 ,0 ,1 ,0},
+					{0 ,1 ,0 ,0 ,0 ,0 ,1 ,0 ,1 ,0 ,0 ,0 ,0 ,1 ,0},
+					{0 ,0 ,0 ,1 ,1 ,1 ,0 ,0 ,0 ,1 ,1 ,1 ,0 ,0 ,0},
+					{0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0},
+					{0 ,0 ,0 ,1 ,1 ,1 ,0 ,0 ,0 ,1 ,1 ,1 ,0 ,0 ,0},
+					{0 ,1 ,0 ,0 ,0 ,0 ,1 ,0 ,1 ,0 ,0 ,0 ,0 ,1 ,0},
+					{0 ,1 ,0 ,0 ,0 ,0 ,1 ,0 ,1 ,0 ,0 ,0 ,0 ,1 ,0},
+					{0 ,1 ,0 ,0 ,0 ,0 ,1 ,0 ,1 ,0 ,0 ,0 ,0 ,1 ,0},
+					{0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0},
+					{0 ,0 ,0 ,1 ,1 ,1 ,0 ,0 ,0 ,1 ,1 ,1 ,0 ,0 ,0},
+					{0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0}
+				};
+			Model m = new Model("Base", v8, 15, 15);
+			
+			p3.set_sel(0, Config.STATES_HEIGHT/2 - 10);
+			gs.addModel(p3, m);
+			
+			p3.set_sel(Config.STATES_WIDTH-m.getWidth(), Config.STATES_HEIGHT/2+10-m.getHeight());
+			gs.addModel(p3, m);
+			
+			int v9[][] =
+				{
+					{1, 1, 0, 0, 1, 1},
+					{1, 0, 0, 1, 0, 1},
+					{0, 1, 0, 0, 0, 0},
+					{0, 0, 0, 0, 1, 0},
+					{1, 0, 1, 0, 0, 1},
+					{1, 1, 0, 0, 1, 1}
+				};
+			m = new Model("Rel�gio", v9, 6, 6);
+			p3.set_sel(m.getWidth()+4, Config.STATES_HEIGHT/2 + 10);
+			gs.addModel(p3, m);
+			
+			p3.set_sel(Config.STATES_WIDTH-m.getWidth()-10, Config.STATES_HEIGHT/2-10-m.getHeight());
+			gs.addModel(p3, m);
+			
+			int v10[][] =
+				{
+						{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, 
+						{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, 
+						{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, 
+						{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, 
+						{0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0}, 
+						{0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 0, 1, 0, 0, 0, 0, 0}, 
+						{0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0}, 
+						{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, 
+						{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, 
+						{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, 
+						{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+				};
+			m = new Model("Oscilador 2", v10, 11, 17);
+			p3.set_sel(Config.STATES_WIDTH/2-m.getWidth()/2-1, 0);
+			gs.addModel(p3, m);
+			
+			p3.set_sel(Config.STATES_WIDTH/2-m.getWidth()/2-1, Config.STATES_HEIGHT-m.getHeight());
+			gs.addModel(p3, m);
+			
+			int v11[][] =
+				{
+					{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+					{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+					{0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0},
+					{0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0},
+					{0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0},
+					{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+					{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+					{0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0},
+					{0, 0, 1, 1, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 1, 1, 0, 0},
+					{0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0},
+					{1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1},
+					{1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1},
+					{1, 0, 0, 0, 0, 1, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 1, 0, 0, 0, 0, 1},
+					{0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0},
+					{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+					{0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0},
+					{1, 0, 0, 0, 0, 1, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 1, 0, 0, 0, 0, 1},
+					{1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1},
+					{1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1},
+					{0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0},
+					{0, 0, 1, 1, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 1, 1, 0, 0},
+					{0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0},
+					{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+					{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+					{0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0},
+					{0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0},
+					{0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0},
+					{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+					{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+				};
+			m = new Model("Quasar", v11, 29, 29);
+			p3.set_sel(Config.STATES_WIDTH/4 - m.getWidth()/2, 1);
+			gs.addModel(p3, m);
+			
+			p3.set_sel(Config.STATES_WIDTH*3/4 - m.getWidth()/2, Config.STATES_HEIGHT-m.getHeight()-1);
+			gs.addModel(p3, m);		
+		}
+	
+	public void run()
+	{
+		boolean end = false; //pra ver se fecha ou n�o o jogo
+		long currTime, lastTime=0;
+		
+		while(!screen.display_closed())
+		{
+			if(gg == false)
+			{
+				c.handle();
+				
+				//------------------- atualiza jogo
+				currTime = System.currentTimeMillis();
+				if(currTime >= lastTime + 1000/Config.UPDATES_PER_SECOND)
+				{
+					if(Config.COMPUTE)
+						gs.compute(); //calcula novo estado e pontos
+					lastTime = currTime;
+					
+					if(gs.isGG() && !Config.NEVER_GG)
+					{
+						gg = true;
+						
+						if(gs.isGGtime())
+							Sound.playSoundTimeLimit();
+						else
+							Sound.playSoundAcabou();
+						System.out.println("GG!");
+					}
+				}
+				//-------------------
+				
+				//------------------- movimento jogador
+				currTime = System.currentTimeMillis();
+				if(currTime >= p1.getTime() + 1000/Config.MOVEMENT_PER_SECOND)
+				{
+					p1.movimento_acumulado();
+					p1.updateTime();
+				}
+				if(currTime >= p2.getTime() + 1000/Config.MOVEMENT_PER_SECOND)
+				{
+					p2.movimento_acumulado();
+					p2.updateTime();
+				}
+				if(Controllers.exit)
+				{
+					break;
+				}
+				//-------------------
+				
+				//------------------- adiciona modelos
+				if(p1.getAcao() == 1)
+				{
+					Model n = ms.getModel(1, p1.getModel()%ms.getAmount(1));
+					if((p1.getX() + n.getWidth() <= (Config.STATES_WIDTH/2 - Config.BARRIER/Config.TILE_SIZE + 1)) || Config.ITS_A_PUTARIA)
+					{
+						if(p1.getY() + n.getHeight() <= Config.STATES_HEIGHT)
+						{
+							//System.out.println("Inserting for p1");
+							gs.addModel(p1, n);
+							Sound.playSoundPlacement();
+						}
+					}
+				}
+				if(p2.getAcao() == 1)
+				{
+					Model n = ms.getModel(2, p2.getModel()%ms.getAmount(2));
+					if( ((p2.getX() >= (Config.STATES_WIDTH/2 + Config.BARRIER/Config.TILE_SIZE)) || Config.ITS_A_PUTARIA ) && (p2.getX() + n.getWidth() < Config.STATES_WIDTH))
+					{
+						if(p2.getY() + n.getHeight() <= Config.STATES_HEIGHT)
+						{
+							//System.out.println("Inserting for p2");
+							gs.addModel(p2, n);
+							Sound.playSoundPlacement();
+						}
+					}
+				}
+				//------------------
+			}
+			else //if gg
+			{
+				end = c.exit_game();
+				if(end == false)
+					reset();
+			}
+			//---------- calcula se deve tocar som de highscore
+			p1.setPoints(gs.getPontos1());
+			if(p1.getPoints() > high1 + Config.SCORES_TO_SOUND)
+			{
+				high1 = p1.getPoints();
+				Sound.playSoundPontos();
+			}
+			p2.setPoints(gs.getPontos2());
+			if(p2.getPoints() > high2 + Config.SCORES_TO_SOUND)
+			{
+				high2 = p2.getPoints();
+				Sound.playSoundPontos();
+			}
+			//----------
+			
+		    //desenha tudo
+		    screen.draw(gs, p1, p2, ms, gg);
+		    
+	        if(end == true)
+	        	break;
+	    }
 	}
 }

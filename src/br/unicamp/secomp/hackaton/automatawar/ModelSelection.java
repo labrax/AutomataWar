@@ -48,7 +48,7 @@ public class ModelSelection {
 	public void insertModels()
 	{
 		Model m;
-		if(Game.SHIELD)
+		if(Config.SHIELD)
 		{
 			int v[][] =
 				{
@@ -85,7 +85,7 @@ public class ModelSelection {
 			//addModel(m);
 		}
 		
-		if(Game.PENTOMINO)
+		if(Config.PENTOMINO)
 		{
 			int v[][] =
 				{
@@ -110,7 +110,7 @@ public class ModelSelection {
 			addModel(2, m);
 		}
 		
-		if(Game.MAY_GLIDER)
+		if(Config.MAY_GLIDER)
 		{
 			int v4[][] =
 				{
@@ -157,7 +157,7 @@ public class ModelSelection {
 			addModel(1, m);
 		}
 		
-		if(Game.FACTORY)
+		if(Config.FACTORY)
 		{
 			int v8[][] =
 				{
@@ -282,7 +282,7 @@ public class ModelSelection {
 			addModel(2, m);
 		}
 		
-		if(Game.SPACESHIP)
+		if(Config.SPACESHIP)
 		{
 			int v12[][] =
 				{
