@@ -26,6 +26,9 @@ public class Controllers {
 	//other
 	public static final int tile_minus = Keyboard.KEY_F1;
 	public static final int tile_more = Keyboard.KEY_F2;
+	public static final int exit_key = Keyboard.KEY_ESCAPE;
+	
+	public static boolean exit = false;
 	
 	public Controllers(Player p1, Player p2) 
 	{
@@ -113,6 +116,10 @@ public class Controllers {
 				case tile_minus:
 					break;
 				case tile_more:
+					break;
+				case exit_key:
+					if(Keyboard.isKeyDown(exit_key))
+						exit = true;
 					break;
 			}
 		}

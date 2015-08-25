@@ -1,7 +1,6 @@
 package br.unicamp.secomp.hackaton.automatawar;
 
 import java.io.File;
-import java.awt.*;
 
 public class Game {	
 	public static boolean RANDOM = false; //o mapa inicial é aleatório (normal = false)
@@ -54,12 +53,14 @@ public class Game {
 		else if(System.getProperty("os.name").startsWith("Mac"))
 			System.setProperty("org.lwjgl.librarypath", new File("native/macosx").getAbsolutePath());
 		
-		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-		/*caso queira forçar uma resolução mude aqui*/
-		Game.SCREEN_WIDTH = (int) screenSize.getWidth();
-		Game.SCREEN_HEIGHT = (int) screenSize.getHeight();
-		Game.FULLSCREEN = true;
-		/*!!*/
+		Screen.get_biggest_display();
+	}
+	
+	public static void setResolution(int width, int height, boolean fullscreen)
+	{
+		Game.SCREEN_WIDTH = width;
+		Game.SCREEN_HEIGHT = height;
+		Game.FULLSCREEN = fullscreen;
 		
 		Game.STATES_WIDTH = SCREEN_WIDTH/TILE_SIZE;
 		Game.STATES_HEIGHT = SCREEN_HEIGHT/TILE_SIZE - BORDER_TOP;

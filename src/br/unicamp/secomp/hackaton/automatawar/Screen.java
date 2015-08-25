@@ -212,6 +212,10 @@ public class Screen {
 					p2.movimento_acumulado();
 					p2.updateTime();
 				}
+				if(Controllers.exit)
+				{
+					break;
+				}
 				//-------------------
 				
 				//------------------- adiciona modelos
@@ -271,21 +275,28 @@ public class Screen {
 	}
 	
 	//funções para iniciar o display
+	public static void get_biggest_display()
+	{
+		Game.setResolution(Display.getDesktopDisplayMode().getWidth(), Display.getDesktopDisplayMode().getHeight(), true);
+	}
+	
 	private void init() {
 	    try
 	    {
 	    	Display.setDisplayMode(new DisplayMode(WIDTH, HEIGHT));
 	        Display.setTitle("Automata War!");
-	        Display.setFullscreen(Game.FULLSCREEN);
+	        /*Display.setFullscreen(Game.FULLSCREEN);
 	        if(Game.FULLSCREEN)
 	        {
 	        	System.setProperty("org.lwjgl.opengl.Window.undecorated", "true");
-	        }
+	        }*/
+	        Display.setDisplayModeAndFullscreen(Display.getDesktopDisplayMode());
 	        Display.create();
 	    }
 	    catch(LWJGLException e)
 	    {
 	        e.printStackTrace();
+	        System.exit(-1);
 	    }
 	    
 	    glMatrixMode(GL_PROJECTION);
