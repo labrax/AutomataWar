@@ -52,6 +52,9 @@ public class GameState {
 		time = false;
 		last_time = 0;
 		
+		pontos1_acumulado = 0;
+		pontos2_acumulado = 0;
+		
 		startTime = System.currentTimeMillis();
 	}
 	
@@ -130,7 +133,7 @@ public class GameState {
 				else if(states[j][i] == 6)
 					pontos1 += Config.POINTS_PER_MY_OSCILATOR;
 			}
-			for(int i=width/2+1; i < width; i++)
+			for(int i = width/2; i < width; i++)
 			{
 				if(states[j][i] != 0 && states[j][i] != 6)
 					pontos1 += Config.POINTS_PER_UNIT_ENEMY_BASE;

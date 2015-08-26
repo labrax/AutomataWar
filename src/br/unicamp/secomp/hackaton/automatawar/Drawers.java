@@ -3,8 +3,8 @@ package br.unicamp.secomp.hackaton.automatawar;
 import org.lwjgl.opengl.GL11;
 
 public class Drawers {
-	private int p1_color = 0; //contadores para a cor dos jogadores
-	private int p2_color = 0;
+	private boolean color_increase = true; //contadores para a cor dos jogadores 
+	private int color = 0;
 	
 	Numbers numbers; //guarda os números do jogo
 	
@@ -79,7 +79,7 @@ public class Drawers {
 					int esquerda = i*Config.MODEL_SIZE + 1 + BORDER_LEFT;
 					int direita = esquerda + (Config.MODEL_SIZE-2);
 					
-					draw_rect(cima, baixo, esquerda, direita, 21);
+					draw_rect(cima, baixo, esquerda, direita, 1);
 				}
 			}
 		}
@@ -100,7 +100,7 @@ public class Drawers {
 					int esquerda = Config.SCREEN_WIDTH-Config.MODEL_SIZE*w2 + i*Config.MODEL_SIZE + 1 + BORDER_LEFT;
 					int direita = esquerda + (Config.MODEL_SIZE-2);
 					
-					draw_rect(cima, baixo, esquerda, direita, 22);
+					draw_rect(cima, baixo, esquerda, direita, 2);
 				}
 			}
 		}
@@ -126,7 +126,6 @@ public class Drawers {
 			}
 			else if(gs.getPontos1() == gs.getPontos2())
 			{
-				pontos_vencedor = 0;
 				cor = 3;
 			}
 			draw_number(pontos_vencedor, Config.SCREEN_HEIGHT/2 + 50, Config.SCREEN_WIDTH/2 + 60, 25, cor, false);
@@ -279,20 +278,31 @@ public class Drawers {
 			GL11.glColor3f(0.9f, 0.9f, 0.9f);
 		else if(cor == 21)
 		{
-			if(p1_color==0)
+			GL11.glColor3f(0.2f, 0.4f + 0.005f*color, 0.8f + 0.01f*color);
+			
+			/*if(p1_color==0)
 				GL11.glColor3f(0.2f, 0.5f, 1.0f);
 			else
-				GL11.glColor3f(0.2f, 0.4f, 0.8f);
+				GL11.glColor3f(0.2f, 0.4f, 0.8f);*/
 			
-			p1_color = (p1_color+1)%5;
+			
 		}
 		else if(cor == 22)
 		{
-			if(p2_color==0)
+			GL11.glColor3f(0.7f + 0.015f*color, 0.1f, 0.2f);
+			/*if(p2_color==0)
 				GL11.glColor3f(1.0f, 0.1f, 0.2f);
 			else
-				GL11.glColor3f(0.7f, 0.1f, 0.2f);
-			p2_color = (p2_color+1)%5;
+				GL11.glColor3f(0.7f, 0.1f, 0.2f);*/
+			if(color == 50)
+				color_increase = false;
+			else if(color == 0)
+				color_increase = true;
+			
+			if(color_increase)
+				color++;
+			else
+				color--;
 		}
 		else
 			GL11.glColor3f(0.8f, 0.8f, 0.8f);

@@ -11,34 +11,37 @@ public class Sound {
 	
 	public void playSound(SoundType type)
 	{
-		try
+		if(Config.SOUND)
 		{
-			AudioInputStream audioInputStream = null;
-			Clip clip;
-			switch(type)
+			try
 			{
-				case SOUND_ACABOU:
-					audioInputStream = AudioSystem.getAudioInputStream(new File(System.getProperty("user.dir") + "/sounds/acabou.wav").getAbsoluteFile());
-					break;
-				case SOUND_PONTOS:
-			        audioInputStream = AudioSystem.getAudioInputStream(new File(System.getProperty("user.dir") + "/sounds/glass_ping-Go445-1207030150.wav").getAbsoluteFile());
-					break;
-				case SOUND_PLACEMENT:
-			        audioInputStream = AudioSystem.getAudioInputStream(new File(System.getProperty("user.dir") + "/sounds/Button Clicking-SoundBible.wav").getAbsoluteFile());
-					break;
-				case SOUND_TIMELIMIT:
-			        audioInputStream = AudioSystem.getAudioInputStream(new File(System.getProperty("user.dir") + "/sounds/BOMB_SIREN-BOMB_SIREN-247265934.wav").getAbsoluteFile());
-					break;
-				default:
-					break;
+				AudioInputStream audioInputStream = null;
+				Clip clip;
+				switch(type)
+				{
+					case SOUND_ACABOU:
+						audioInputStream = AudioSystem.getAudioInputStream(new File(System.getProperty("user.dir") + "/sounds/acabou.wav").getAbsoluteFile());
+						break;
+					case SOUND_PONTOS:
+				        audioInputStream = AudioSystem.getAudioInputStream(new File(System.getProperty("user.dir") + "/sounds/glass_ping-Go445-1207030150.wav").getAbsoluteFile());
+						break;
+					case SOUND_PLACEMENT:
+				        audioInputStream = AudioSystem.getAudioInputStream(new File(System.getProperty("user.dir") + "/sounds/Button Clicking-SoundBible.wav").getAbsoluteFile());
+						break;
+					case SOUND_TIMELIMIT:
+				        audioInputStream = AudioSystem.getAudioInputStream(new File(System.getProperty("user.dir") + "/sounds/BOMB_SIREN-BOMB_SIREN-247265934.wav").getAbsoluteFile());
+						break;
+					default:
+						break;
+				}
+		        clip = AudioSystem.getClip();
+		        clip.open(audioInputStream);
+		        clip.start();
 			}
-	        clip = AudioSystem.getClip();
-	        clip.open(audioInputStream);
-	        clip.start();
-		}
-		catch(Exception e)
-		{
-			e.printStackTrace();
+			catch(Exception e)
+			{
+				e.printStackTrace();
+			}
 		}
 	}
 }

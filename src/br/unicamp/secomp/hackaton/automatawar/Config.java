@@ -8,6 +8,7 @@ public class Config {
 	public static boolean FULLSCREEN;
 	public static int SCREEN_WIDTH;
 	public static int SCREEN_HEIGHT;
+	//---
 	
 	public static int STATES_WIDTH; //quantidade de elementos
 	public static int STATES_HEIGHT;
@@ -27,7 +28,7 @@ public class Config {
 	public static int POINTS_PER_UNIT_ENEMY_BASE = 5; // (5)
 	public static int POINTS_PER_MY_OSCILATOR = 15; // (15)
 	
-	public static long GAME_TIME = 1; //tempo em segundos do jogo // (180)
+	public static long GAME_TIME = 60; //tempo em segundos do jogo // (180)
 	public static int POINTS_SIZE = 8; //tamanho da letra de pontos // (8)
 	
 	public static boolean ITS_A_PUTARIA = false; //CHEAT MODE! may place blocks on other players (false)
@@ -40,6 +41,8 @@ public class Config {
 	public static boolean PENTOMINO = false; // super bomba!
 	
 	public static boolean NEVER_GG = false; //NEVER ENDING MODE (false)
+	
+	public static boolean SOUND = true;
 	
 	public static int SCORES_TO_SOUND = 500; //quantia de pontos acima do maior anterior para tocar som
 	

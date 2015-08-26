@@ -1,7 +1,6 @@
 package br.unicamp.secomp.hackaton.automatawar;
 
 import org.lwjgl.LWJGLException;
-import org.lwjgl.Sys;
 import org.lwjgl.opengl.*;
 
 import static org.lwjgl.opengl.GL11.*;
@@ -11,7 +10,7 @@ public class Screen {
 	
 	public Screen()
 	{
-		System.out.println("Hello LWJGL " + Sys.getVersion() + "!");
+		System.out.println("AutomataWar!");
 		drawer = new Drawers();
 		
 		Config.setResolution(Display.getDesktopDisplayMode().getWidth(), Display.getDesktopDisplayMode().getHeight(), true);

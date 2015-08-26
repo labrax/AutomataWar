@@ -191,6 +191,10 @@ public class Game {
 				{
 					if(Config.COMPUTE)
 						gs.compute(); //calcula novo estado e pontos
+					
+					p1.setPoints(gs.getPontos1());
+					p2.setPoints(gs.getPontos2());
+					
 					lastTime = currTime;
 					
 					if(gs.isGG() && !Config.NEVER_GG)
@@ -201,11 +205,22 @@ public class Game {
 							sound.playSound(Sound.SoundType.SOUND_TIMELIMIT);
 						else
 							sound.playSound(Sound.SoundType.SOUND_ACABOU);
-						System.out.println("GG!");
+						System.out.println("Game Over! Player 1 " + p1.getPoints() + " x " + p2.getPoints() + " Player 2");
 					}
 				}
 				//-------------------
-				
+				//---------- calcula se deve tocar som de highscore
+				if(p1.getPoints() > high1 + Config.SCORES_TO_SOUND)
+				{
+					high1 = p1.getPoints();
+					sound.playSound(Sound.SoundType.SOUND_PONTOS);
+				}
+				if(p2.getPoints() > high2 + Config.SCORES_TO_SOUND)
+				{
+					high2 = p2.getPoints();
+					sound.playSound(Sound.SoundType.SOUND_PONTOS);
+				}
+				//-------------------
 				//------------------- movimento jogador
 				currTime = System.currentTimeMillis();
 				if(currTime >= p1.getTime() + 1000/Config.MOVEMENT_PER_SECOND)
@@ -223,7 +238,6 @@ public class Game {
 					break;
 				}
 				//-------------------
-				
 				//------------------- adiciona modelos
 				if(p1.getAcao() == 1)
 				{
@@ -255,24 +269,14 @@ public class Game {
 			}
 			else //if gg
 			{
-				end = c.exit_game();
-				if(end == false)
-					reset();
+				if(c.check_exit() == true)
+				{
+					if(Controllers.exit == true)
+						break;
+					else
+						reset();
+				}
 			}
-			//---------- calcula se deve tocar som de highscore
-			p1.setPoints(gs.getPontos1());
-			if(p1.getPoints() > high1 + Config.SCORES_TO_SOUND)
-			{
-				high1 = p1.getPoints();
-				sound.playSound(Sound.SoundType.SOUND_PONTOS);
-			}
-			p2.setPoints(gs.getPontos2());
-			if(p2.getPoints() > high2 + Config.SCORES_TO_SOUND)
-			{
-				high2 = p2.getPoints();
-				sound.playSound(Sound.SoundType.SOUND_PONTOS);
-			}
-			//----------
 			
 		    //desenha tudo
 		    screen.draw(gs, p1, p2, ms, gg);
