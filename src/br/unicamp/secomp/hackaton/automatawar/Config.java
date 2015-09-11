@@ -17,7 +17,7 @@ public class Config {
 	
 	public static int TILE_SIZE = 10; //tamanho dos quadrados (10)
 	
-	public static int MODEL_SIZE = 5; //tamanho do modelo de cima (5)
+	public static int MODEL_SIZE = 8; //tamanho do modelo de cima (5)
 	
 	public static int BARRIER = TILE_SIZE*5; //barreira a cada lado no meio (em pixels)
 	
@@ -28,14 +28,14 @@ public class Config {
 	public static int POINTS_PER_UNIT_ENEMY_BASE = 5; // (5)
 	public static int POINTS_PER_MY_OSCILATOR = 15; // (15)
 	
-	public static long GAME_TIME = 60; //tempo em segundos do jogo // (180)
+	public static long GAME_TIME = 100; //tempo em segundos do jogo // (180)
 	public static int POINTS_SIZE = 8; //tamanho da letra de pontos // (8)
 	
 	public static boolean ITS_A_PUTARIA = false; //CHEAT MODE! may place blocks on other players (false)
 	
 	public static boolean SHIELD = true; //may place shields! (true)
 	public static boolean MAY_GLIDER = true; //and etc (true)
-	public static boolean FACTORY = true; // (true)
+	public static boolean FACTORY = false; // (true)
 	public static boolean SPACESHIP = true; // (true)
 	
 	public static boolean PENTOMINO = false; // super bomba!

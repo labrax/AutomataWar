@@ -265,9 +265,10 @@ public class Drawers {
 		if(cor == 1) //p1
 			GL11.glColor3f(0.0f, 0.0f, 1.0f);
 		else if(cor == 2) //p2
-			GL11.glColor3f(1.0f, 0f, 0.0f);
+			GL11.glColor3f(0.8f, 0.0f, 0.0f);
 		else if(cor == 3) //neutro
 			GL11.glColor3f(0.9f, 0.547f, 0.4f);
+			//GL11.glColor3f(0.0f, 0.8f, 0.0f);
 		else if(cor == 4) //fundo
 			GL11.glColor3f(0.8f, 0.8f, 0.8f);
 		else if(cor == 5) //terra neutra

@@ -128,16 +128,16 @@ public class GameState {
 		{
 			for(int i=0; i < width/2; i++)
 			{
-				if(states[j][i] != 0 && states[j][i] != 6)
+				/*if(states[j][i] != 0 && states[j][i] != 6)
 					pontos2 += Config.POINTS_PER_UNIT_ENEMY_BASE;
-				else if(states[j][i] == 6)
+				else*/ if(states[j][i] == 6)
 					pontos1 += Config.POINTS_PER_MY_OSCILATOR;
 			}
 			for(int i = width/2; i < width; i++)
 			{
-				if(states[j][i] != 0 && states[j][i] != 6)
+				/*if(states[j][i] != 0 && states[j][i] != 6)
 					pontos1 += Config.POINTS_PER_UNIT_ENEMY_BASE;
-				else if(states[j][i] == 6)
+				else*/ if(states[j][i] == 6)
 					pontos2 += Config.POINTS_PER_MY_OSCILATOR;
 			}
 		}
